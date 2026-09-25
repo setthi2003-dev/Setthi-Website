@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #090a0f;
+  --foreground: #f3f4f6;
+  --card-bg: #11131a;
+  --card-border: #1f2330;
 }
 
 @theme inline {
@@ -12,15 +14,203 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #090a0f;
+  color: #e5e7eb;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+}
+
+/* Custom styling for parsed legal markdown content in dark theme */
+.prose-dark {
+  color: #d1d5db;
+  font-size: 0.975rem;
+  line-height: 1.75;
+}
+
+.prose-dark h1,
+.prose-dark h2,
+.prose-dark h3,
+.prose-dark h4 {
+  scroll-margin-top: 110px;
+}
+
+.prose-dark h1 {
+  color: #ffffff;
+  font-size: 1.85rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #1f2432;
+  letter-spacing: -0.02em;
+}
+
+.prose-dark h2 {
+  color: #f9fafb;
+  font-size: 1.45rem;
+  font-weight: 600;
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #1a202c;
+  letter-spacing: -0.015em;
+}
+
+.prose-dark h3 {
+  color: #f3f4f6;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 1.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.prose-dark h4 {
+  color: #e5e7eb;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-dark p {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  color: #cbd5e1;
+}
+
+.prose-dark ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-dark ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-dark li {
+  margin-top: 0.35rem;
+  margin-bottom: 0.35rem;
+  color: #cbd5e1;
+}
+
+.prose-dark a {
+  color: #38bdf8;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+
+.prose-dark a:hover {
+  color: #7dd3fc;
+}
+
+.prose-dark strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.prose-dark hr {
+  border: 0;
+  border-top: 1px solid #1f2432;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+/* Callouts & Blockquotes */
+.prose-dark blockquote {
+  background: #11141f;
+  border-left: 4px solid #38bdf8;
+  border-radius: 0 8px 8px 0;
+  padding: 1rem 1.25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  color: #cbd5e1;
+}
+
+.prose-dark blockquote p {
+  margin: 0.25rem 0;
+}
+
+/* Responsive tables with crisp borders */
+.prose-dark table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.875rem;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #242938;
+}
+
+.prose-dark th {
+  background-color: #161b26;
+  color: #f9fafb;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #242938;
+  border-right: 1px solid #242938;
+}
+
+.prose-dark th:last-child {
+  border-right: none;
+}
+
+.prose-dark td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #1c2230;
+  border-right: 1px solid #1c2230;
+  background-color: #0d111a;
+  color: #cbd5e1;
+}
+
+.prose-dark td:last-child {
+  border-right: none;
+}
+
+.prose-dark tr:last-child td {
+  border-bottom: none;
+}
+
+.prose-dark tr:hover td {
+  background-color: #131722;
+}
+
+/* Code & Pre */
+.prose-dark code {
+  background-color: #1a202c;
+  color: #38bdf8;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.prose-dark pre {
+  background-color: #0c0f17;
+  border: 1px solid #1f2433;
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.prose-dark pre code {
+  background: transparent;
+  color: #e2e8f0;
+  padding: 0;
+  font-size: 0.875rem;
 }

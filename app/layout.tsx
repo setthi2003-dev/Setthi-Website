@@ -15,6 +15,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Setthi — Legal & Statutory Compliance Hub",
   description: "Privacy Policy, Terms of Service, DPDP Statutory Consent Notice, and EULA for Setthi.",
+  icons: {
+    icon: "/Setthi.png",
+    shortcut: "/Setthi.png",
+    apple: "/Setthi.png",
+  },
 };
 
 export default function RootLayout({

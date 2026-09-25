@@ -62,8 +62,12 @@ export default function LegalDocViewer({ sections }: LegalDocViewerProps) {
         <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500/20 to-sky-500/20 border border-emerald-500/30 text-emerald-400 font-bold text-lg">
-                §
+              <div className="relative flex h-10 w-10 items-center justify-center bg-transparent flex-shrink-0">
+                <img
+                  src="/Setthi.png"
+                  alt="Setthi App Icon"
+                  className="h-full w-full object-contain"
+                />
               </div>
               <div>
                 <h1 className="text-lg font-bold tracking-tight text-white flex items-center gap-2">

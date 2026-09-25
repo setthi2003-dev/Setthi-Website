@@ -10,7 +10,7 @@ function slugify(text: string): string {
     .replace(/\s/g, "-");
 }
 
-// Configure custom heading renderer to generate anchor IDs matching TOC links
+// Configure custom heading & responsive table renderer
 const customRenderer = {
   heading(this: any, { tokens, depth, text }: { tokens?: any[]; depth: number; text?: string }): string {
     const raw = text || (tokens ? tokens.map((t: any) => t.raw || t.text || "").join("") : "");
@@ -18,6 +18,10 @@ const customRenderer = {
     const id = slugify(plain);
     const content = this.parser.parseInline(tokens);
     return `<h${depth} id="${id}">${content}</h${depth}>\n`;
+  },
+  table(this: any, token: any): string {
+    const defaultHtml = marked.Renderer.prototype.table.call(this, token);
+    return `<div class="table-wrapper">${defaultHtml}</div>\n`;
   },
 };
 

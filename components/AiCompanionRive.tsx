@@ -53,6 +53,7 @@ export default function AiCompanionRive({
       style={{
         width: size,
         height: size,
+        mixBlendMode: "screen",
       }}
     >
       <canvas
@@ -62,8 +63,7 @@ export default function AiCompanionRive({
         style={{
           width: size,
           height: size,
-          mixBlendMode: "screen",
-          transform: `translateY(-${Math.max(1, Math.round(size * 0.085))}px)`,
+          display: "block",
         }}
         className="pointer-events-none block"
       />

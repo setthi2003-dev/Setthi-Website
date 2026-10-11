@@ -174,10 +174,8 @@ export default function AiTerminalCard({
 
       {/* Terminal Header Bar */}
       <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/[0.06]">
-        <div className="flex items-center gap-3">
-          <div className="-translate-y-[5px]">
-            <AiCompanionRive size={38} />
-          </div>
+        <div className="flex items-start gap-3">
+          <AiCompanionRive size={32} className="-mt-1" />
           <div>
             <div className="flex items-center gap-2">
               <span className="font-semibold text-sm text-white tracking-tight">Setthi AI</span>
@@ -213,7 +211,7 @@ export default function AiTerminalCard({
         {/* AI Reply with Tool Invocation Indicator */}
         <div className="flex items-start gap-3 pt-3 border-t border-white/[0.04]">
           <div className="flex items-center gap-1.5 shrink-0 w-16 pt-0.5">
-            <AiCompanionRive size={20} />
+            <AiCompanionRive size={18} className="-mt-0.5" />
             <span className="font-mono text-[11px] text-emerald-400 uppercase tracking-wider font-semibold">
               AI:
             </span>

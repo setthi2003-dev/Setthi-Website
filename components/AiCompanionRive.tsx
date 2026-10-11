@@ -1,7 +1,16 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRive } from "@rive-app/react-canvas";
+import { useRive, Rive, Layout, Fit, Alignment } from "@rive-app/react-canvas";
+
+// Suppress default-state-machine deprecation warning globally if supported
+if (typeof window !== "undefined" && Rive && "suppressDeprecationWarnings" in Rive) {
+  try {
+    (Rive as any).suppressDeprecationWarnings = ["default-state-machine"];
+  } catch {
+    // Ignore if not writable
+  }
+}
 
 interface AiCompanionRiveProps {
   className?: string;
@@ -15,18 +24,34 @@ export default function AiCompanionRive({
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== "undefined" && Rive && "suppressDeprecationWarnings" in Rive) {
+      try {
+        (Rive as any).suppressDeprecationWarnings = ["default-state-machine"];
+      } catch {
+        // Ignore
+      }
+    }
     setMounted(true);
   }, []);
 
   const { RiveComponent } = useRive({
     src: "/ai_companion.riv",
+    stateMachines: "State Machine 1",
     autoplay: true,
+    layout: new Layout({
+      fit: Fit.Contain,
+      alignment: Alignment.Center,
+      minX: 170,
+      minY: 400,
+      maxX: 430,
+      maxY: 660,
+    }),
   });
 
   if (!mounted) {
     return (
       <div
-        className={`relative rounded-lg bg-emerald-500/10 border border-emerald-500/20 shrink-0 ${className}`}
+        className={`relative shrink-0 ${className}`}
         style={{ width: size, height: size }}
       />
     );
@@ -34,8 +59,11 @@ export default function AiCompanionRive({
 
   return (
     <div
-      className={`relative overflow-hidden shrink-0 flex items-center justify-center ${className}`}
-      style={{ width: size, height: size }}
+      className={`relative shrink-0 rounded-full overflow-hidden flex items-center justify-center ${className}`}
+      style={{
+        width: size,
+        height: size,
+      }}
     >
       <RiveComponent
         className="w-full h-full object-contain pointer-events-none"
@@ -44,3 +72,4 @@ export default function AiCompanionRive({
     </div>
   );
 }
+

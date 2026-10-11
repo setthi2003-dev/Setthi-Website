@@ -376,8 +376,8 @@ export default function PinnedScrollTimeline({
               }}
             >
               <div className="w-full text-center mb-4 max-w-2xl">
-                <div className="inline-flex items-center gap-2 mb-2 px-3 py-1 rounded-full bg-[#14161C] border border-white/[0.08]">
-                  <AiCompanionRive size={18} />
+                <div className="inline-flex items-center gap-2 mb-2">
+                  <AiCompanionRive size={24} />
                   <span className="font-mono text-xs text-[#8A8F98] uppercase tracking-wider">
                     Ask Anything • Real Answers
                   </span>

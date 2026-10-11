@@ -7,38 +7,70 @@ interface AiTerminalCardProps {
   className?: string;
 }
 
-interface Scenario {
+interface ChatScenario {
   id: string;
-  label: string;
+  levelBadge: string;
+  chipLabel: string;
+  toolCall: string;
   question: string;
-  response: string;
-  badge: string;
+  replyParagraphs: string[];
 }
 
-const SCENARIOS: Scenario[] = [
+const CHAT_SCENARIOS: ChatScenario[] = [
   {
-    id: "where-money-went",
-    label: "Where did my salary go?",
-    question: "Where did my salary go this month?",
-    response:
-      "Balance: ₹7,050. ₹8,400 drained into post-midnight orders and subscriptions you haven't opened in 4 months.",
-    badge: "Monthly Check",
+    id: "affordability",
+    levelBadge: "Level 2 • Derived Math",
+    chipLabel: "Can I afford ₹500?",
+    toolCall: "tool: daily_safe_limit + balance",
+    question: "Can I afford ₹500 today?",
+    replyParagraphs: [
+      "Your available balance is ₹37.21 as of 6 Oct 2026 (5 days ago).",
+      "Your safe spending limit is ₹7.44 a day until 11 Oct. Spending ₹500 right now would exceed your safe limit and leave you overdrawn for the rest of your cycle.",
+    ],
   },
   {
-    id: "can-i-afford",
-    label: "Can I afford dinner tonight?",
-    question: "Can I afford dinner at Bastian tonight?",
-    response:
-      "Rent is ₹22,000 next Monday. If you spend ₹4,000 on dinner tonight, you'll have only ₹3,050 left for the entire week. Better cook at home!",
-    badge: "Safe-to-Spend",
+    id: "netflix",
+    levelBadge: "Level 1 • Single Fact",
+    chipLabel: "Spent on Netflix?",
+    toolCall: "tool: spending_summary",
+    question: "How much did I spend on Netflix?",
+    replyParagraphs: [
+      "You spent ₹597.00 on Netflix across 3 payments between 6 Jul and 6 Oct 2026.",
+      "Your subscription is ₹199.00 a month, last paid on 23 Sep. Your next expected charge is around 21 Oct.",
+    ],
   },
   {
-    id: "show-leaks",
-    label: "Show my money leaks",
-    question: "What are my biggest money leaks?",
-    response:
-      "Found 4 leaks: Swiggy at 1:14 AM (₹420), Blinkit at 2:30 AM (₹180), Netflix you haven't watched (₹649), and late-night Biryani (₹850).",
-    badge: "Leak Alert",
+    id: "pace",
+    levelBadge: "Level 2 • Spending Pace",
+    chipLabel: "Am I spending faster?",
+    toolCall: "tool: spending_pace",
+    question: "Am I spending faster lately?",
+    replyParagraphs: [
+      "Your 7-day spending pace is ₹182.43 a day, compared to ₹1,224.00 a day in the previous window.",
+      "Your average daily spending dropped by 85.1% over the last week as of 6 Oct 2026.",
+    ],
+  },
+  {
+    id: "bills",
+    levelBadge: "Level 2 • Recurring Bills",
+    chipLabel: "What bills do I have?",
+    toolCall: "tool: bills_and_subscriptions",
+    question: "What bills do I have coming up?",
+    replyParagraphs: [
+      "You have 1 active recurring bill detected: Netflix at ₹199.00 a month.",
+      "It was last paid on 23 Sep 2026. The next payment is estimated for 21 Oct.",
+    ],
+  },
+  {
+    id: "comparison",
+    levelBadge: "Level 3 • Multi-Step",
+    chipLabel: "Compare Aug vs Sep",
+    toolCall: "tool: spending_summary (2 rounds)",
+    question: "Compare my spending in August and September",
+    replyParagraphs: [
+      "In August, total outflow was ₹14,210.00 across 42 payments. In September, total outflow was ₹18,450.00 across 56 payments.",
+      "September spending was ₹4,240.00 higher than August, driven primarily by dining out and grocery restocks.",
+    ],
   },
 ];
 
@@ -48,77 +80,98 @@ export default function AiTerminalCard({
 }: AiTerminalCardProps) {
   const [scenarioIndex, setScenarioIndex] = useState(0);
   const [typedQuestion, setTypedQuestion] = useState("");
-  const [typedResponse, setTypedResponse] = useState("");
-  const [phase, setPhase] = useState<"typing_q" | "thinking" | "typing_r" | "idle">("typing_q");
-  const isInteractingRef = useRef(false);
+  const [typedParagraphs, setTypedParagraphs] = useState<string[]>([]);
+  const [currentParaIndex, setCurrentParaIndex] = useState(0);
+  const [currentParaText, setCurrentParaText] = useState("");
+  const [phase, setPhase] = useState<"typing_q" | "calling_tool" | "streaming_r" | "idle">("typing_q");
+  
+  const isUserInteractingRef = useRef(false);
+  const currentScenario = CHAT_SCENARIOS[scenarioIndex];
 
-  const currentScenario = SCENARIOS[scenarioIndex];
-
-  // Typing animation simulation loop
+  // Simulation state machine
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    let timer: NodeJS.Timeout;
 
     if (phase === "typing_q") {
-      setTypedResponse("");
-      const targetText = currentScenario.question;
-      if (typedQuestion.length < targetText.length) {
-        timeout = setTimeout(() => {
-          setTypedQuestion(targetText.slice(0, typedQuestion.length + 1));
-        }, 40);
+      setTypedParagraphs([]);
+      setCurrentParaIndex(0);
+      setCurrentParaText("");
+      const target = currentScenario.question;
+
+      if (typedQuestion.length < target.length) {
+        timer = setTimeout(() => {
+          setTypedQuestion(target.slice(0, typedQuestion.length + 1));
+        }, 35);
       } else {
-        timeout = setTimeout(() => {
-          setPhase("thinking");
-        }, 300);
+        timer = setTimeout(() => {
+          setPhase("calling_tool");
+        }, 350);
       }
-    } else if (phase === "thinking") {
-      timeout = setTimeout(() => {
-        setPhase("typing_r");
-      }, 500);
-    } else if (phase === "typing_r") {
-      const targetText = currentScenario.response;
-      if (typedResponse.length < targetText.length) {
-        timeout = setTimeout(() => {
-          // Type in small chunks for natural speed
-          const step = Math.min(3, targetText.length - typedResponse.length);
-          setTypedResponse(targetText.slice(0, typedResponse.length + step));
-        }, 25);
+    } else if (phase === "calling_tool") {
+      // Simulate Gemini calling backend tool and fetching exact statement numbers
+      timer = setTimeout(() => {
+        setPhase("streaming_r");
+      }, 600);
+    } else if (phase === "streaming_r") {
+      const targetParas = currentScenario.replyParagraphs;
+      const targetPara = targetParas[currentParaIndex];
+
+      if (currentParaText.length < targetPara.length) {
+        timer = setTimeout(() => {
+          const step = Math.min(4, targetPara.length - currentParaText.length);
+          setCurrentParaText(targetPara.slice(0, currentParaText.length + step));
+        }, 20);
       } else {
-        setPhase("idle");
+        // Current paragraph finished
+        if (currentParaIndex < targetParas.length - 1) {
+          timer = setTimeout(() => {
+            setTypedParagraphs((prev) => [...prev, currentParaText]);
+            setCurrentParaIndex((prev) => prev + 1);
+            setCurrentParaText("");
+          }, 200);
+        } else {
+          // All paragraphs completed
+          setTypedParagraphs((prev) => [...prev, currentParaText]);
+          setPhase("idle");
+        }
       }
     } else if (phase === "idle") {
-      // Pause on completed answer before moving to next question automatically
-      timeout = setTimeout(() => {
-        if (!isInteractingRef.current) {
-          setScenarioIndex((prev) => (prev + 1) % SCENARIOS.length);
+      timer = setTimeout(() => {
+        if (!isUserInteractingRef.current) {
+          setScenarioIndex((prev) => (prev + 1) % CHAT_SCENARIOS.length);
           setTypedQuestion("");
-          setTypedResponse("");
+          setTypedParagraphs([]);
+          setCurrentParaIndex(0);
+          setCurrentParaText("");
           setPhase("typing_q");
         }
-      }, 4500);
+      }, 5500);
     }
 
-    return () => clearTimeout(timeout);
-  }, [phase, typedQuestion, typedResponse, currentScenario]);
+    return () => clearTimeout(timer);
+  }, [phase, typedQuestion, currentParaText, currentParaIndex, currentScenario]);
 
-  const selectScenario = useCallback((index: number) => {
-    isInteractingRef.current = true;
-    setScenarioIndex(index);
+  const selectScenario = useCallback((idx: number) => {
+    isUserInteractingRef.current = true;
+    setScenarioIndex(idx);
     setTypedQuestion("");
-    setTypedResponse("");
+    setTypedParagraphs([]);
+    setCurrentParaIndex(0);
+    setCurrentParaText("");
     setPhase("typing_q");
     setTimeout(() => {
-      isInteractingRef.current = false;
-    }, 6000);
+      isUserInteractingRef.current = false;
+    }, 7000);
   }, []);
 
   return (
     <div
       className={`w-full max-w-2xl mx-auto rounded-xl bg-[#0F1014] border border-white/[0.08] p-5 sm:p-7 shadow-2xl relative overflow-hidden text-left ${className}`}
     >
-      {/* Hairline subtle glow accent */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
+      {/* Hairline top subtle glow accent */}
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-emerald-500/35 to-transparent" />
 
-      {/* Terminal Title Bar */}
+      {/* Terminal Header Bar */}
       <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/[0.06]">
         <div className="flex items-center gap-2">
           <div className="flex gap-1.5">
@@ -127,21 +180,21 @@ export default function AiTerminalCard({
             <span className="w-2.5 h-2.5 rounded-full bg-white/[0.08]" />
           </div>
           <span className="font-mono text-[11px] text-[#8A8F98] ml-2 tracking-tight">
-            setthi ~ ask anything
+            gemini ~ 7 tools grounded
           </span>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-          <span className="font-mono text-[10px] uppercase tracking-wider text-emerald-400">
-            {currentScenario.badge}
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400" />
+          <span className="font-mono text-[10px] text-emerald-400 tracking-wider">
+            {currentScenario.levelBadge}
           </span>
         </div>
       </div>
 
-      {/* Simulated Conversation Box (No manual user typing input) */}
-      <div className="space-y-4 mb-5 min-h-[140px] flex flex-col justify-center">
-        {/* User Question Simulation */}
+      {/* Simulated Conversation Box */}
+      <div className="space-y-4 mb-5 min-h-[175px] flex flex-col justify-center">
+        {/* User Question */}
         <div className="flex items-start gap-3">
           <span className="font-mono text-[11px] text-[#8A8F98] uppercase tracking-wider pt-0.5 shrink-0 w-12">
             You:
@@ -154,40 +207,54 @@ export default function AiTerminalCard({
           </div>
         </div>
 
-        {/* AI Answer Simulation */}
-        <div className="flex items-start gap-3 pt-2 border-t border-white/[0.04]">
+        {/* AI Reply with Tool Invocation Indicator */}
+        <div className="flex items-start gap-3 pt-3 border-t border-white/[0.04]">
           <span className="font-mono text-[11px] text-emerald-400 uppercase tracking-wider pt-0.5 shrink-0 w-12">
             Setthi:
           </span>
-          <div className="font-sans text-[14px] sm:text-[15px] text-[#D4D4D8] leading-relaxed">
-            {phase === "thinking" ? (
-              <span className="inline-flex items-center gap-1.5 font-mono text-xs text-[#8A8F98]">
-                <span>Checking your expenses</span>
-                <span className="animate-pulse">...</span>
-              </span>
-            ) : typedResponse ? (
+
+          <div className="space-y-2.5 flex-1">
+            {phase === "calling_tool" ? (
+              <div className="flex items-center gap-2 font-mono text-xs text-[#8A8F98]">
+                <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                <span>Invoking {currentScenario.toolCall}...</span>
+              </div>
+            ) : (
               <>
-                <span>{typedResponse}</span>
-                {phase === "typing_r" && (
-                  <span className="inline-block w-1.5 h-4 ml-1 bg-emerald-400 align-middle animate-pulse" />
+                {/* Committed Paragraphs */}
+                {typedParagraphs.map((para, i) => (
+                  <p
+                    key={i}
+                    className="font-sans text-[13.5px] sm:text-[14.5px] text-[#D4D4D8] leading-relaxed"
+                  >
+                    {para}
+                  </p>
+                ))}
+
+                {/* Currently Streaming Paragraph */}
+                {phase === "streaming_r" && currentParaText && (
+                  <p className="font-sans text-[13.5px] sm:text-[14.5px] text-[#D4D4D8] leading-relaxed">
+                    {currentParaText}
+                    <span className="inline-block w-1.5 h-3.5 ml-1 bg-emerald-400 align-middle animate-pulse" />
+                  </p>
                 )}
               </>
-            ) : null}
+            )}
           </div>
         </div>
       </div>
 
-      {/* Interactive Question Chips (Click to test different questions) */}
+      {/* Interactive Level / Question Chips */}
       <div className="space-y-4 pt-3 border-t border-white/[0.06]">
         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           <span className="text-[10px] font-mono text-[#8A8F98] mr-1 uppercase">
-            Try a question:
+            Test a question:
           </span>
-          {SCENARIOS.map((scenario, index) => {
+          {CHAT_SCENARIOS.map((sc, index) => {
             const isSelected = scenarioIndex === index;
             return (
               <button
-                key={scenario.id}
+                key={sc.id}
                 type="button"
                 onClick={() => selectScenario(index)}
                 className={`text-[11px] font-sans px-3 py-1.5 rounded-md transition-all border ${
@@ -196,17 +263,17 @@ export default function AiTerminalCard({
                     : "bg-[#14161C] text-[#8A8F98] border-white/[0.08] hover:border-white/20 hover:text-[#EDEDED]"
                 }`}
               >
-                {scenario.label}
+                {sc.chipLabel}
               </button>
             );
           })}
         </div>
 
-        {/* Footer Row: Simple Trust Line & Call to Action */}
+        {/* Footer Row: Grounded Trust Line & Call to Action */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
           <div className="flex items-center gap-2 text-[11px] font-mono text-[#8A8F98]">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-            <span>100% Free • Stays private on your phone • No ads</span>
+            <span>Exact bank statement numbers • No emojis • 100% Free</span>
           </div>
 
           <div className="flex items-center gap-2.5 w-full sm:w-auto justify-end">
@@ -214,7 +281,7 @@ export default function AiTerminalCard({
               href="#details"
               className="text-[12px] font-medium text-[#8A8F98] hover:text-[#EDEDED] px-3.5 py-2 rounded-full border border-white/[0.08] hover:border-white/25 transition-all text-center"
             >
-              Learn More
+              See All Capabilities
             </a>
 
             <button

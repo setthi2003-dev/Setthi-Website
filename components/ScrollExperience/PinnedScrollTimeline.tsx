@@ -115,13 +115,14 @@ export default function PinnedScrollTimeline({
         <div
           className="w-full max-w-2xl mx-auto mb-3 transition-all duration-300"
           style={{
+            display: scrollProgress >= 0.82 ? "none" : "block",
             opacity:
               scrollProgress >= 0.78
-                ? Math.max(0, 1 - (scrollProgress - 0.78) / 0.05)
+                ? Math.max(0, 1 - (scrollProgress - 0.78) / 0.04)
                 : salaryDockProgress,
             transform: `translateY(${
               scrollProgress >= 0.78
-                ? ((scrollProgress - 0.78) / 0.05) * -15
+                ? ((scrollProgress - 0.78) / 0.04) * -15
                 : (1 - salaryDockProgress) * -20
             }px)`,
             pointerEvents: salaryDockProgress > 0.5 && scrollProgress < 0.78 ? "auto" : "none",

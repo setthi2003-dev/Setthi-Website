@@ -1,16 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useRive, Rive, Layout, Fit, Alignment } from "@rive-app/react-canvas";
-
-// Suppress default-state-machine deprecation warning globally if supported
-if (typeof window !== "undefined" && Rive && "suppressDeprecationWarnings" in Rive) {
-  try {
-    (Rive as any).suppressDeprecationWarnings = ["default-state-machine"];
-  } catch {
-    // Ignore if not writable
-  }
-}
+import React, { useEffect, useRef } from "react";
+import { Rive, Layout, Fit, Alignment } from "@rive-app/canvas";
 
 interface AiCompanionRiveProps {
   className?: string;
@@ -21,37 +12,46 @@ export default function AiCompanionRive({
   className = "",
   size = 32,
 }: AiCompanionRiveProps) {
-  const [mounted, setMounted] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const riveRef = useRef<Rive | null>(null);
+
+  const innerScale = 2.15;
+  const innerW = size * innerScale;
+  const innerH = size * innerScale;
+  const shiftX = innerW * -0.21;
+  const shiftY = innerH * -0.15;
 
   useEffect(() => {
-    if (typeof window !== "undefined" && Rive && "suppressDeprecationWarnings" in Rive) {
-      try {
-        (Rive as any).suppressDeprecationWarnings = ["default-state-machine"];
-      } catch {
-        // Ignore
-      }
+    if (!canvasRef.current) return;
+
+    try {
+      const rive = new Rive({
+        src: "/ai_companion.riv",
+        canvas: canvasRef.current,
+        stateMachines: ["State Machine 1"],
+        autoplay: true,
+        layout: new Layout({
+          fit: Fit.FitWidth,
+          alignment: Alignment.BottomCenter,
+        }),
+      });
+
+      riveRef.current = rive;
+    } catch (err) {
+      console.error("Failed to initialize Rive companion:", err);
     }
-    setMounted(true);
+
+    return () => {
+      if (riveRef.current) {
+        try {
+          riveRef.current.cleanup();
+        } catch {
+          // ignore
+        }
+        riveRef.current = null;
+      }
+    };
   }, []);
-
-  const { RiveComponent } = useRive({
-    src: "/ai_companion.riv",
-    stateMachine: "State Machine 1",
-    autoplay: true,
-    layout: new Layout({
-      fit: Fit.Cover,
-      alignment: Alignment.BottomCenter,
-    }),
-  });
-
-  if (!mounted) {
-    return (
-      <div
-        className={`relative shrink-0 ${className}`}
-        style={{ width: size, height: size }}
-      />
-    );
-  }
 
   return (
     <div
@@ -62,13 +62,23 @@ export default function AiCompanionRive({
         mixBlendMode: "screen",
       }}
     >
-      <div className="w-full h-full absolute inset-0 pointer-events-none">
-        <RiveComponent
-          className="w-full h-full pointer-events-none"
+      <div
+        style={{
+          width: innerW,
+          height: innerH,
+          position: "absolute",
+          transform: `translate(${shiftX}px, ${shiftY}px)`,
+        }}
+        className="pointer-events-none shrink-0"
+      >
+        <canvas
+          ref={canvasRef}
+          width={Math.round(innerW * 2)}
+          height={Math.round(innerH * 2)}
           style={{ width: "100%", height: "100%" }}
+          className="pointer-events-none"
         />
       </div>
     </div>
   );
 }
-

@@ -37,7 +37,7 @@ export default function LinearHeader({
             href="/"
             className="flex items-center gap-2 group text-[#EDEDED] hover:text-white transition-colors"
           >
-            <AiCompanionRive size={20} />
+            <AiCompanionRive size={24} />
             <span className="font-semibold text-[13px] tracking-[-0.03em] text-[#EDEDED]">
               Setthi
             </span>

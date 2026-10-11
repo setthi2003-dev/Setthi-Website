@@ -174,11 +174,11 @@ export default function AiTerminalCard({
 
       {/* Terminal Header Bar */}
       <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/[0.06]">
-        <div className="flex items-center gap-3.5">
-          <AiCompanionRive size={46} />
+        <div className="flex items-center gap-2.5">
+          <AiCompanionRive size={26} />
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-semibold text-sm sm:text-base text-white tracking-tight">Setthi AI</span>
+              <span className="font-semibold text-sm text-white tracking-tight">Setthi AI</span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             </div>
             <span className="font-mono text-[10px] text-[#8A8F98]">gemini ~ 7 tools grounded</span>
@@ -210,8 +210,8 @@ export default function AiTerminalCard({
 
         {/* AI Reply with Tool Invocation Indicator */}
         <div className="flex items-start gap-3 pt-3 border-t border-white/[0.04]">
-          <div className="flex items-center gap-2 shrink-0 w-16 pt-0.5">
-            <AiCompanionRive size={22} />
+          <div className="flex items-center gap-1.5 shrink-0 w-16 pt-0.5">
+            <AiCompanionRive size={14} />
             <span className="font-mono text-[11px] text-emerald-400 uppercase tracking-wider font-semibold">
               AI:
             </span>

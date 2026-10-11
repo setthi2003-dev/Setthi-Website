@@ -124,7 +124,7 @@ export default function ReducedMotionBento({ onClaimAccess }: ReducedMotionBento
           <div>
             <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/[0.06]">
               <div className="flex items-center gap-2">
-                <AiCompanionRive size={24} />
+                <AiCompanionRive size={20} />
                 <span className="font-mono text-[11px] text-[#8A8F98]">
                   AI Summary
                 </span>

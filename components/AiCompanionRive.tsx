@@ -10,7 +10,7 @@ interface AiCompanionRiveProps {
 
 export default function AiCompanionRive({
   className = "",
-  size = 32,
+  size = 24,
 }: AiCompanionRiveProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const riveRef = useRef<Rive | null>(null);

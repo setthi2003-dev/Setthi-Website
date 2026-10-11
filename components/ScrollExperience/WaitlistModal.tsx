@@ -69,10 +69,10 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
               ✓
             </div>
             <h3 className="text-base font-semibold text-white tracking-tight">
-              You are in line for Batch 01.
+              You&apos;re on the early access list!
             </h3>
             <p className="text-xs text-[#8A8F98] max-w-xs mx-auto leading-relaxed">
-              We dispatched invite confirmation to <span className="text-white font-mono">{email}</span>. Priority access for iOS TestFlight & Android APK begins shortly.
+              We sent your invite confirmation to <span className="text-white font-mono">{email}</span>. You will be among the first to get access on iOS and Android.
             </p>
             <div className="pt-3">
               <button
@@ -80,7 +80,7 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                 onClick={onClose}
                 className="px-5 py-2 rounded-full bg-white text-black text-xs font-semibold hover:bg-zinc-200 transition-colors"
               >
-                Close Terminal
+                Done
               </button>
             </div>
           </div>
@@ -88,10 +88,10 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
           <form onSubmit={handleSubmit} className="pt-5 space-y-4">
             <div>
               <p className="text-xs text-[#8A8F98] leading-relaxed mb-3">
-                Join 50,000+ conscious spenders replacing boring spreadsheets with real-time UPI guardrails and AI insight.
+                Join thousands of people chatting with their money, cutting out impulsive expenses, and knowing what is safe to spend. 100% free forever.
               </p>
               <label htmlFor="modal-email" className="block text-[11px] font-mono text-[#8A8F98] uppercase mb-1.5">
-                Work or personal email:
+                Your email:
               </label>
               <input
                 id="modal-email"

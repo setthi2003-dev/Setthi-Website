@@ -1,62 +1,115 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 interface AiTerminalCardProps {
   onClaimAccess: () => void;
   className?: string;
 }
 
+interface Scenario {
+  id: string;
+  label: string;
+  question: string;
+  response: string;
+  badge: string;
+}
+
+const SCENARIOS: Scenario[] = [
+  {
+    id: "where-money-went",
+    label: "Where did my salary go?",
+    question: "Where did my salary go this month?",
+    response:
+      "Balance: ₹7,050. ₹8,400 drained into post-midnight orders and subscriptions you haven't opened in 4 months.",
+    badge: "Monthly Check",
+  },
+  {
+    id: "can-i-afford",
+    label: "Can I afford dinner tonight?",
+    question: "Can I afford dinner at Bastian tonight?",
+    response:
+      "Rent is ₹22,000 next Monday. If you spend ₹4,000 on dinner tonight, you'll have only ₹3,050 left for the entire week. Better cook at home!",
+    badge: "Safe-to-Spend",
+  },
+  {
+    id: "show-leaks",
+    label: "Show my money leaks",
+    question: "What are my biggest money leaks?",
+    response:
+      "Found 4 leaks: Swiggy at 1:14 AM (₹420), Blinkit at 2:30 AM (₹180), Netflix you haven't watched (₹649), and late-night Biryani (₹850).",
+    badge: "Leak Alert",
+  },
+];
+
 export default function AiTerminalCard({
   onClaimAccess,
   className = "",
 }: AiTerminalCardProps) {
-  const defaultSynthesis =
-    "Balance: ₹7,050. ₹8,400 drained into post-midnight orders and recurring subscriptions you haven't opened in 4 months.";
+  const [scenarioIndex, setScenarioIndex] = useState(0);
+  const [typedQuestion, setTypedQuestion] = useState("");
+  const [typedResponse, setTypedResponse] = useState("");
+  const [phase, setPhase] = useState<"typing_q" | "thinking" | "typing_r" | "idle">("typing_q");
+  const isInteractingRef = useRef(false);
 
-  const [activeChip, setActiveChip] = useState<string | null>(null);
-  const [displayText, setDisplayText] = useState<string>(defaultSynthesis);
-  const [customInput, setCustomInput] = useState<string>("");
+  const currentScenario = SCENARIOS[scenarioIndex];
 
-  const chips = [
-    {
-      id: "leaks",
-      label: "Show all leaks",
-      response:
-        "Flagged 4 leaks: Swiggy (-₹420), Blinkit (-₹180), Netflix (-₹649), Midnight Biryani (-₹850). Total leaked this cycle: ₹8,400.",
-    },
-    {
-      id: "guardrail",
-      label: "Set 1 AM guardrail",
-      response:
-        "Guardrail staged: UPI debits between 12:00 AM - 05:00 AM will require strict 60s cooldown confirmation and tough-love roast preview.",
-    },
-    {
-      id: "audit",
-      label: "Audit subscriptions",
-      response:
-        "Audited 3 recurring debits: Netflix 4K (-₹649/mo, 0 watch hours in 120 days). Tap to cancel with automated RBI e-mandate revocation.",
-    },
-  ];
+  // Typing animation simulation loop
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
 
-  const handleChipClick = (chip: (typeof chips)[0]) => {
-    if (activeChip === chip.id) {
-      setActiveChip(null);
-      setDisplayText(defaultSynthesis);
-    } else {
-      setActiveChip(chip.id);
-      setDisplayText(chip.response);
+    if (phase === "typing_q") {
+      setTypedResponse("");
+      const targetText = currentScenario.question;
+      if (typedQuestion.length < targetText.length) {
+        timeout = setTimeout(() => {
+          setTypedQuestion(targetText.slice(0, typedQuestion.length + 1));
+        }, 40);
+      } else {
+        timeout = setTimeout(() => {
+          setPhase("thinking");
+        }, 300);
+      }
+    } else if (phase === "thinking") {
+      timeout = setTimeout(() => {
+        setPhase("typing_r");
+      }, 500);
+    } else if (phase === "typing_r") {
+      const targetText = currentScenario.response;
+      if (typedResponse.length < targetText.length) {
+        timeout = setTimeout(() => {
+          // Type in small chunks for natural speed
+          const step = Math.min(3, targetText.length - typedResponse.length);
+          setTypedResponse(targetText.slice(0, typedResponse.length + step));
+        }, 25);
+      } else {
+        setPhase("idle");
+      }
+    } else if (phase === "idle") {
+      // Pause on completed answer before moving to next question automatically
+      timeout = setTimeout(() => {
+        if (!isInteractingRef.current) {
+          setScenarioIndex((prev) => (prev + 1) % SCENARIOS.length);
+          setTypedQuestion("");
+          setTypedResponse("");
+          setPhase("typing_q");
+        }
+      }, 4500);
     }
-  };
 
-  const handleCustomSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!customInput.trim()) return;
-    setDisplayText(
-      `Analyzing "${customInput}" against real-time ledger: Projected surplus impact is +₹4,200 if deferred to next salary cycle.`
-    );
-    setCustomInput("");
-  };
+    return () => clearTimeout(timeout);
+  }, [phase, typedQuestion, typedResponse, currentScenario]);
+
+  const selectScenario = useCallback((index: number) => {
+    isInteractingRef.current = true;
+    setScenarioIndex(index);
+    setTypedQuestion("");
+    setTypedResponse("");
+    setPhase("typing_q");
+    setTimeout(() => {
+      isInteractingRef.current = false;
+    }, 6000);
+  }, []);
 
   return (
     <div
@@ -74,84 +127,89 @@ export default function AiTerminalCard({
             <span className="w-2.5 h-2.5 rounded-full bg-white/[0.08]" />
           </div>
           <span className="font-mono text-[11px] text-[#8A8F98] ml-2 tracking-tight">
-            setthi-engine v2.4 ~ ai:triage
+            setthi ~ ask anything
           </span>
         </div>
 
         <div className="flex items-center gap-2">
           <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
           <span className="font-mono text-[10px] uppercase tracking-wider text-emerald-400">
-            Realtime
+            {currentScenario.badge}
           </span>
         </div>
       </div>
 
-      {/* Content Display with blinking cursor */}
-      <div className="min-h-[76px] mb-5">
-        <p className="font-sans text-[15px] sm:text-[17px] text-[#EDEDED] leading-relaxed tracking-[-0.02em]">
-          <span className="text-emerald-400 font-mono text-sm mr-2 select-none">
-            &gt;
+      {/* Simulated Conversation Box (No manual user typing input) */}
+      <div className="space-y-4 mb-5 min-h-[140px] flex flex-col justify-center">
+        {/* User Question Simulation */}
+        <div className="flex items-start gap-3">
+          <span className="font-mono text-[11px] text-[#8A8F98] uppercase tracking-wider pt-0.5 shrink-0 w-12">
+            You:
           </span>
-          <span className="font-medium text-white">{displayText}</span>
-          <span
-            className="inline-block w-2 h-4 ml-1.5 bg-emerald-400/90 align-middle animate-pulse"
-            aria-hidden="true"
-          />
-        </p>
+          <div className="font-sans text-[15px] sm:text-[16px] text-[#EDEDED] font-medium leading-relaxed">
+            &ldquo;{typedQuestion}&rdquo;
+            {phase === "typing_q" && (
+              <span className="inline-block w-1.5 h-4 ml-1 bg-white align-middle animate-pulse" />
+            )}
+          </div>
+        </div>
+
+        {/* AI Answer Simulation */}
+        <div className="flex items-start gap-3 pt-2 border-t border-white/[0.04]">
+          <span className="font-mono text-[11px] text-emerald-400 uppercase tracking-wider pt-0.5 shrink-0 w-12">
+            Setthi:
+          </span>
+          <div className="font-sans text-[14px] sm:text-[15px] text-[#D4D4D8] leading-relaxed">
+            {phase === "thinking" ? (
+              <span className="inline-flex items-center gap-1.5 font-mono text-xs text-[#8A8F98]">
+                <span>Checking your expenses</span>
+                <span className="animate-pulse">...</span>
+              </span>
+            ) : typedResponse ? (
+              <>
+                <span>{typedResponse}</span>
+                {phase === "typing_r" && (
+                  <span className="inline-block w-1.5 h-4 ml-1 bg-emerald-400 align-middle animate-pulse" />
+                )}
+              </>
+            ) : null}
+          </div>
+        </div>
       </div>
 
-      {/* Action Footer: Input Field + Contextual Prompt Chips + Primary CTA */}
-      <div className="space-y-4 pt-2 border-t border-white/[0.06]">
-        {/* Contextual prompt chips */}
+      {/* Interactive Question Chips (Click to test different questions) */}
+      <div className="space-y-4 pt-3 border-t border-white/[0.06]">
         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-          <span className="text-[10px] font-mono text-[#8A8F98] mr-1 hidden sm:inline uppercase">
-            Prompt chips:
+          <span className="text-[10px] font-mono text-[#8A8F98] mr-1 uppercase">
+            Try a question:
           </span>
-          {chips.map((chip) => {
-            const isSelected = activeChip === chip.id;
+          {SCENARIOS.map((scenario, index) => {
+            const isSelected = scenarioIndex === index;
             return (
               <button
-                key={chip.id}
+                key={scenario.id}
                 type="button"
-                onClick={() => handleChipClick(chip)}
-                className={`text-[11px] font-mono px-2.5 py-1 rounded-md transition-all border ${
+                onClick={() => selectScenario(index)}
+                className={`text-[11px] font-sans px-3 py-1.5 rounded-md transition-all border ${
                   isSelected
-                    ? "bg-white/[0.12] text-white border-white/30"
+                    ? "bg-white/[0.12] text-white border-white/30 font-medium"
                     : "bg-[#14161C] text-[#8A8F98] border-white/[0.08] hover:border-white/20 hover:text-[#EDEDED]"
                 }`}
               >
-                [{chip.label}]
+                {scenario.label}
               </button>
             );
           })}
         </div>
 
-        {/* Input prompt field */}
-        <form onSubmit={handleCustomSubmit} className="relative">
-          <input
-            type="text"
-            value={customInput}
-            onChange={(e) => setCustomInput(e.target.value)}
-            placeholder="Ask Setthi a command or rule (e.g. Can I afford sushi tonight?)..."
-            className="w-full h-10 pl-3.5 pr-14 rounded-lg bg-[#14161C] border border-white/[0.08] text-[13px] text-[#EDEDED] placeholder-[#8A8F98]/60 focus:outline-none focus:border-white/30 transition-colors font-sans"
-          />
-          <button
-            type="submit"
-            className="absolute right-1.5 top-1.5 bottom-1.5 px-2.5 rounded bg-white/[0.08] hover:bg-white/[0.15] text-[11px] font-mono text-[#EDEDED] transition-colors"
-          >
-            Run
-          </button>
-        </form>
-
-        {/* Primary and Secondary CTA Row */}
+        {/* Footer Row: Simple Trust Line & Call to Action */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
           <div className="flex items-center gap-2 text-[11px] font-mono text-[#8A8F98]">
-            <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
-            <span>Zero training on personal data • RBI AA Sandboxed</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <span>100% Free • Stays private on your phone • No ads</span>
           </div>
 
           <div className="flex items-center gap-2.5 w-full sm:w-auto justify-end">
-            {/* Secondary Action: Ghost pill with interactive hairline border highlight */}
             <a
               href="#details"
               className="text-[12px] font-medium text-[#8A8F98] hover:text-[#EDEDED] px-3.5 py-2 rounded-full border border-white/[0.08] hover:border-white/25 transition-all text-center"
@@ -159,13 +217,12 @@ export default function AiTerminalCard({
               Learn More
             </a>
 
-            {/* Primary Action: Solid white pill button with integrated keyboard shortcut badge */}
             <button
               type="button"
               onClick={onClaimAccess}
               className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-white text-black hover:bg-[#F0F0F0] active:scale-[0.98] transition-all text-[12px] font-semibold tracking-tight shadow-[0_0_20px_rgba(255,255,255,0.18)] border border-white shrink-0"
             >
-              <span>Claim Early Access</span>
+              <span>Get Free Early Access</span>
               <span className="font-mono text-xs">→</span>
               <kbd className="hidden sm:inline-flex items-center justify-center font-mono text-[10px] bg-black/[0.1] text-black px-1.5 py-0.5 rounded border border-black/10">
                 ↵

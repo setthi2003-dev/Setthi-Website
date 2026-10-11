@@ -15,14 +15,14 @@ export default function ReducedMotionBento({ onClaimAccess }: ReducedMotionBento
       <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/[0.08]">
         <div>
           <span className="font-mono text-xs text-[#8A8F98] uppercase tracking-wider">
-            Static Bento Architecture [Reduced-Motion Active]
+            All-In-One Overview
           </span>
           <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mt-1">
-            The Complete Financial Ledger at a Glance
+            Your Monthly Money Story at a Glance
           </h2>
         </div>
         <div className="font-mono text-xs text-[#8A8F98] hidden sm:block">
-          Day 01 → Day 28 • Complete Cycle
+          Day 01 to Day 28 • Full Cycle
         </div>
       </div>
 
@@ -33,7 +33,7 @@ export default function ReducedMotionBento({ onClaimAccess }: ReducedMotionBento
           <div>
             <div className="flex items-center justify-between mb-4">
               <span className="font-mono text-[11px] text-[#8A8F98] uppercase">
-                Anchor 01 / Ledger
+                Payday
               </span>
               <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                 Day 01 / Salary Day
@@ -45,13 +45,13 @@ export default function ReducedMotionBento({ onClaimAccess }: ReducedMotionBento
             </div>
 
             <p className="text-xs text-[#8A8F98] leading-relaxed">
-              Initial net monthly inflow credited via RBI NEFT. The starting liquidity benchmark for automated ledger categorization.
+              Your salary lands in your account. Setthi immediately looks ahead at your upcoming rent and bills to figure out what you can safely spend.
             </p>
           </div>
 
           <div className="pt-6 border-t border-white/[0.06] mt-4 space-y-2">
             <div className="flex justify-between text-[11px] font-mono text-[#8A8F98]">
-              <span>Month progression</span>
+              <span>Days into the month</span>
               <span className="text-white">Day 1 of 28</span>
             </div>
             <div className="w-full h-1 bg-white/[0.06] rounded-full overflow-hidden">
@@ -65,9 +65,9 @@ export default function ReducedMotionBento({ onClaimAccess }: ReducedMotionBento
           <div>
             <div className="flex items-center justify-between mb-3">
               <span className="font-mono text-[11px] text-[#8A8F98] uppercase">
-                Triage Breakdown
+                Where It Went
               </span>
-              <span className="font-mono text-[11px] text-[#8A8F98]">10 UPI Debits</span>
+              <span className="font-mono text-[11px] text-[#8A8F98]">10 Spends Logged</span>
             </div>
 
             {/* Categorized Expense Pills */}
@@ -114,7 +114,7 @@ export default function ReducedMotionBento({ onClaimAccess }: ReducedMotionBento
           </div>
 
           <div className="pt-3 text-[11px] font-mono text-[#8A8F98] border-t border-white/[0.06] mt-3">
-            Realtime classification engine
+            Automatic categorization in seconds
           </div>
         </div>
 
@@ -125,10 +125,10 @@ export default function ReducedMotionBento({ onClaimAccess }: ReducedMotionBento
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400" />
                 <span className="font-mono text-[11px] text-[#8A8F98]">
-                  AI Synthesis
+                  AI Summary
                 </span>
               </div>
-              <span className="font-mono text-[10px] text-white/[0.3]">v2.4</span>
+              <span className="font-mono text-[10px] text-emerald-400">Real talk</span>
             </div>
 
             <p className="font-sans text-[13px] text-[#EDEDED] leading-relaxed mb-4">
@@ -138,15 +138,15 @@ export default function ReducedMotionBento({ onClaimAccess }: ReducedMotionBento
 
             <div className="space-y-1.5 text-[11px] font-mono text-[#8A8F98]">
               <div className="flex justify-between py-1 border-b border-white/[0.04]">
-                <span>Post-midnight leak:</span>
+                <span>Late-night food:</span>
                 <span className="text-red-400 font-medium">₹1,450</span>
               </div>
               <div className="flex justify-between py-1 border-b border-white/[0.04]">
-                <span>Idle subscriptions:</span>
+                <span>Unused subscriptions:</span>
                 <span className="text-red-400 font-medium">₹3,149</span>
               </div>
               <div className="flex justify-between py-1">
-                <span>Safe to spend:</span>
+                <span>Truly safe to spend:</span>
                 <span className="text-white font-medium">₹7,050</span>
               </div>
             </div>
@@ -154,7 +154,7 @@ export default function ReducedMotionBento({ onClaimAccess }: ReducedMotionBento
 
           <div className="pt-4 mt-2">
             <span className="inline-block text-[10px] font-mono px-2 py-0.5 rounded bg-white/[0.06] text-[#8A8F98]">
-              Automated tough-love audit
+              Helpful reality checks when you need them
             </span>
           </div>
         </div>
@@ -164,16 +164,16 @@ export default function ReducedMotionBento({ onClaimAccess }: ReducedMotionBento
           <div>
             <div className="flex items-center justify-between mb-4">
               <span className="font-mono text-[11px] text-[#8A8F98] uppercase">
-                Action Control
+                Early Access
               </span>
-              <span className="font-mono text-[10px] text-emerald-400">Batch 01 Open</span>
+              <span className="font-mono text-[10px] text-emerald-400">100% Free</span>
             </div>
 
             <h3 className="text-base font-semibold text-white tracking-tight mb-2">
-              Claim Your Early Access Seat
+              Get Setthi Free
             </h3>
             <p className="text-xs text-[#8A8F98] leading-relaxed mb-4">
-              Experience the minimalist financial terminal that fixes cashflow without spreadsheets.
+              Join thousands of people chatting with their money and staying on top of cashflow effortlessly.
             </p>
 
             <div className="space-y-1.5 mb-4">
@@ -183,11 +183,11 @@ export default function ReducedMotionBento({ onClaimAccess }: ReducedMotionBento
               </div>
               <div className="text-[11px] font-mono text-[#8A8F98] flex items-center gap-1.5">
                 <span className="text-emerald-400 font-bold">✓</span>
-                <span>DPDP Act 2023 compliant</span>
+                <span>Stays private on your phone</span>
               </div>
               <div className="text-[11px] font-mono text-[#8A8F98] flex items-center gap-1.5">
                 <span className="text-emerald-400 font-bold">✓</span>
-                <span>Bank-grade AES-256 client vault</span>
+                <span>100% Free forever • No ads</span>
               </div>
             </div>
           </div>
@@ -198,7 +198,7 @@ export default function ReducedMotionBento({ onClaimAccess }: ReducedMotionBento
               onClick={onClaimAccess}
               className="w-full inline-flex items-center justify-center gap-2 h-10 px-4 rounded-full bg-white text-black hover:bg-zinc-200 text-xs font-semibold tracking-tight transition-all shadow-md"
             >
-              <span>Claim Early Access</span>
+              <span>Get Free Early Access</span>
               <span className="font-mono">→</span>
             </button>
           </div>

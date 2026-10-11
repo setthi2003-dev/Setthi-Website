@@ -122,7 +122,7 @@ export default function PinnedScrollTimeline({
           <div className="h-11 rounded-lg bg-[#121316] border border-white/[0.08] px-4 flex items-center justify-between shadow-lg">
             <div className="flex items-center gap-2">
               <span className="font-mono text-[11px] text-[#8A8F98] uppercase tracking-wider">
-                Ledger Balance:
+                Current Balance:
               </span>
               <span className="font-mono text-sm font-semibold text-white tracking-tight tabular-nums">
                 ₹{formattedBalance}
@@ -161,7 +161,7 @@ export default function PinnedScrollTimeline({
               <div className="w-full max-w-xl rounded-2xl bg-[#121316] border border-white/[0.08] p-6 sm:p-9 shadow-2xl text-left pointer-events-auto">
                 <div className="flex items-center justify-between pb-4 border-b border-white/[0.06]">
                   <span className="font-mono text-xs text-[#8A8F98] uppercase tracking-wider">
-                    Ledger Centerpiece • Cycle Start
+                    Salary Day • Starting Inflow
                   </span>
                   <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">
                     Day 01 / Salary Day
@@ -170,7 +170,7 @@ export default function PinnedScrollTimeline({
 
                 <div className="my-6">
                   <div className="text-[12px] font-mono text-[#8A8F98] uppercase tracking-wider mb-1">
-                    Monthly Liquidity Credited
+                    Salary Credited
                   </div>
                   <div className="text-4xl sm:text-6xl font-mono font-bold text-white tracking-tight tabular-nums flex items-baseline">
                     <span>₹{formattedBalance}</span>
@@ -180,8 +180,8 @@ export default function PinnedScrollTimeline({
                 {/* Hairline progress indicator beneath the card tracking Day 1 to 28 */}
                 <div className="space-y-2 pt-2">
                   <div className="flex items-center justify-between text-xs font-mono text-[#8A8F98]">
-                    <span>Cycle Progression: Day {String(currentDay).padStart(2, "0")}</span>
-                    <span>Day 28 (Payday Horizon)</span>
+                    <span>Days into the month: Day {String(currentDay).padStart(2, "0")}</span>
+                    <span>Day 28</span>
                   </div>
                   <div className="w-full h-1 bg-white/[0.08] rounded-full overflow-hidden">
                     <div
@@ -194,9 +194,9 @@ export default function PinnedScrollTimeline({
                 <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs text-[#8A8F98]">
                   <span className="flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                    <span>RBI NEFT Autodetected</span>
+                    <span>Bank deposit received</span>
                   </span>
-                  <span className="font-mono">Scroll to stream debits ↓</span>
+                  <span className="font-mono">Scroll down to see spending ↓</span>
                 </div>
               </div>
             </div>
@@ -222,10 +222,10 @@ export default function PinnedScrollTimeline({
             >
               <div className="w-full mb-3 flex items-center justify-between px-1">
                 <span className="font-mono text-xs text-[#8A8F98] uppercase tracking-wider">
-                  The Entropy Stream • Rigid Rail Stack
+                  Daily Spends • Live Stream
                 </span>
                 <span className="font-mono text-xs text-[#8A8F98]">
-                  {visibleTxCount} / {TRANSACTIONS.length} debits arrived
+                  {visibleTxCount} / {TRANSACTIONS.length} spends logged
                 </span>
               </div>
 
@@ -254,7 +254,7 @@ export default function PinnedScrollTimeline({
               </div>
 
               <div className="mt-4 text-center font-mono text-[11px] text-[#8A8F98]">
-                Spring physics rail: Newer UPI transactions slide up, older cards deck into stack
+                Every UPI payment slides in and stacks up automatically
               </div>
             </div>
           )}
@@ -279,10 +279,10 @@ export default function PinnedScrollTimeline({
             >
               <div className="w-full text-center mb-5">
                 <span className="font-mono text-xs text-[#8A8F98] uppercase tracking-wider block mb-1">
-                  The Triage Pipeline • Mechanical Classification
+                  Automatic Sorting • Zero Manual Math
                 </span>
                 <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                  Transactions slot into four definitive operational buckets.
+                  Every expense is neatly sorted into four simple buckets.
                 </h3>
               </div>
 
@@ -353,13 +353,13 @@ export default function PinnedScrollTimeline({
               </div>
 
               <div className="mt-3 text-center font-mono text-[11px] text-[#8A8F98]">
-                Mechanical reel counter: Scrub scroll to watch debit percentages calculate in real-time
+                Needs (Rent & Food), Wants (Coffee & Outings), Leaks (Midnight orders)
               </div>
             </div>
           )}
 
           {/* ------------------------------------------------------- */}
-          {/* SCREEN 4: THE INTELLIGENCE TERMINAL (80% - 100% scroll) */}
+          {/* SCREEN 4: CHAT WITH YOUR MONEY (80% - 100% scroll) */}
           {/* ------------------------------------------------------- */}
           {scrollProgress >= 0.78 && (
             <div
@@ -376,10 +376,10 @@ export default function PinnedScrollTimeline({
             >
               <div className="w-full text-center mb-4 max-w-xl">
                 <span className="font-mono text-xs text-[#8A8F98] uppercase tracking-wider block mb-1">
-                  Screen 4 • AI Intelligence Terminal
+                  Ask Anything • Real Answers
                 </span>
                 <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                  Instant Executive Synthesis
+                  Chat With Your Money in Plain English
                 </h3>
               </div>
 
@@ -395,7 +395,7 @@ export default function PinnedScrollTimeline({
           {/* Stage Quick Jumps */}
           <div className="flex items-center gap-1.5">
             <span className="text-[10px] font-mono text-[#8A8F98] mr-1 hidden xs:inline uppercase">
-              Phase:
+              Jump:
             </span>
             <button
               type="button"
@@ -406,7 +406,7 @@ export default function PinnedScrollTimeline({
                   : "text-[#8A8F98] hover:text-white"
               }`}
             >
-              0% Anchor
+              0% Salary
             </button>
             <button
               type="button"
@@ -417,7 +417,7 @@ export default function PinnedScrollTimeline({
                   : "text-[#8A8F98] hover:text-white"
               }`}
             >
-              35% Stack
+              35% Spends
             </button>
             <button
               type="button"
@@ -428,7 +428,7 @@ export default function PinnedScrollTimeline({
                   : "text-[#8A8F98] hover:text-white"
               }`}
             >
-              70% Triage
+              70% Categories
             </button>
             <button
               type="button"
@@ -439,7 +439,7 @@ export default function PinnedScrollTimeline({
                   : "text-[#8A8F98] hover:text-white"
               }`}
             >
-              100% Terminal
+              100% Ask AI
             </button>
           </div>
 

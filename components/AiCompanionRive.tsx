@@ -63,6 +63,7 @@ export default function AiCompanionRive({
           width: size,
           height: size,
           mixBlendMode: "screen",
+          transform: `translateY(-${Math.max(1, Math.round(size * 0.085))}px)`,
         }}
         className="pointer-events-none block"
       />

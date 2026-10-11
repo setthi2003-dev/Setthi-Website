@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import AiCompanionRive from "@/components/AiCompanionRive";
 
 interface AiTerminalCardProps {
   onClaimAccess: () => void;
@@ -166,22 +167,24 @@ export default function AiTerminalCard({
 
   return (
     <div
-      className={`w-full max-w-2xl mx-auto rounded-xl bg-[#0F1014] border border-white/[0.08] p-5 sm:p-7 shadow-2xl relative overflow-hidden text-left ${className}`}
+      className={`w-full max-w-3xl lg:max-w-4xl mx-auto rounded-xl bg-[#0F1014] border border-white/[0.08] p-5 sm:p-7 shadow-2xl relative overflow-hidden text-left ${className}`}
     >
       {/* Hairline top subtle glow accent */}
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-emerald-500/35 to-transparent" />
 
       {/* Terminal Header Bar */}
       <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/[0.06]">
-        <div className="flex items-center gap-2">
-          <div className="flex gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-white/[0.12]" />
-            <span className="w-2.5 h-2.5 rounded-full bg-white/[0.08]" />
-            <span className="w-2.5 h-2.5 rounded-full bg-white/[0.08]" />
+        <div className="flex items-center gap-3">
+          <div className="w-7 h-7 rounded-lg bg-[#18191E] border border-white/[0.1] flex items-center justify-center overflow-hidden shrink-0">
+            <AiCompanionRive size={24} />
           </div>
-          <span className="font-mono text-[11px] text-[#8A8F98] ml-2 tracking-tight">
-            gemini ~ 7 tools grounded
-          </span>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-[13px] text-white tracking-tight">Setthi AI</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            </div>
+            <span className="font-mono text-[10px] text-[#8A8F98]">gemini ~ 7 tools grounded</span>
+          </div>
         </div>
 
         <div className="flex items-center gap-2">
@@ -196,7 +199,7 @@ export default function AiTerminalCard({
       <div className="space-y-4 mb-5 min-h-[175px] flex flex-col justify-center">
         {/* User Question */}
         <div className="flex items-start gap-3">
-          <span className="font-mono text-[11px] text-[#8A8F98] uppercase tracking-wider pt-0.5 shrink-0 w-12">
+          <span className="font-mono text-[11px] text-[#8A8F98] uppercase tracking-wider pt-0.5 shrink-0 w-16">
             You:
           </span>
           <div className="font-sans text-[15px] sm:text-[16px] text-[#EDEDED] font-medium leading-relaxed">
@@ -209,9 +212,14 @@ export default function AiTerminalCard({
 
         {/* AI Reply with Tool Invocation Indicator */}
         <div className="flex items-start gap-3 pt-3 border-t border-white/[0.04]">
-          <span className="font-mono text-[11px] text-emerald-400 uppercase tracking-wider pt-0.5 shrink-0 w-12">
-            Setthi:
-          </span>
+          <div className="flex items-center gap-1.5 shrink-0 w-16 pt-0.5">
+            <div className="w-4 h-4 rounded-md bg-[#18191E] border border-white/[0.08] flex items-center justify-center overflow-hidden shrink-0">
+              <AiCompanionRive size={14} />
+            </div>
+            <span className="font-mono text-[11px] text-emerald-400 uppercase tracking-wider">
+              AI:
+            </span>
+          </div>
 
           <div className="space-y-2.5 flex-1">
             {phase === "calling_tool" ? (

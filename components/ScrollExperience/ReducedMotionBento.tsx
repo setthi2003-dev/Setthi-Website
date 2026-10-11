@@ -2,6 +2,7 @@
 
 import React from "react";
 import NotificationToast from "./NotificationToast";
+import AiCompanionRive from "@/components/AiCompanionRive";
 import { TRANSACTIONS } from "./types";
 
 interface ReducedMotionBentoProps {
@@ -123,7 +124,9 @@ export default function ReducedMotionBento({ onClaimAccess }: ReducedMotionBento
           <div>
             <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/[0.06]">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                <div className="w-5 h-5 rounded bg-[#18191E] border border-white/[0.1] flex items-center justify-center overflow-hidden shrink-0">
+                  <AiCompanionRive size={18} />
+                </div>
                 <span className="font-mono text-[11px] text-[#8A8F98]">
                   AI Summary
                 </span>

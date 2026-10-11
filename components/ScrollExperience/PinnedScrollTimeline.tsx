@@ -3,6 +3,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import NotificationToast from "./NotificationToast";
 import AiTerminalCard from "./AiTerminalCard";
+import AiCompanionRive from "@/components/AiCompanionRive";
 import { TRANSACTIONS, TransactionItem, ExpenseCategory } from "./types";
 
 interface PinnedScrollTimelineProps {
@@ -374,11 +375,14 @@ export default function PinnedScrollTimeline({
                 })`,
               }}
             >
-              <div className="w-full text-center mb-4 max-w-xl">
-                <span className="font-mono text-xs text-[#8A8F98] uppercase tracking-wider block mb-1">
-                  Ask Anything • Real Answers
-                </span>
-                <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+              <div className="w-full text-center mb-4 max-w-2xl">
+                <div className="inline-flex items-center gap-2 mb-2 px-3 py-1 rounded-full bg-[#14161C] border border-white/[0.08]">
+                  <AiCompanionRive size={18} />
+                  <span className="font-mono text-xs text-[#8A8F98] uppercase tracking-wider">
+                    Ask Anything • Real Answers
+                  </span>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                   Chat With Your Money in Plain English
                 </h3>
               </div>

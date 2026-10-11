@@ -3,6 +3,8 @@
 import React from "react";
 import Link from "next/link";
 
+import AiCompanionRive from "@/components/AiCompanionRive";
+
 interface LinearHeaderProps {
   currentDay: number;
   scrollPercent: number;
@@ -29,26 +31,14 @@ export default function LinearHeader({
   return (
     <header className="fixed top-4 inset-x-0 mx-auto w-[calc(100%-2rem)] max-w-4xl z-50">
       <div className="h-10 px-3.5 rounded-full bg-[#0D0E12]/85 backdrop-blur-md border border-white/[0.08] flex items-center justify-between shadow-2xl transition-all">
-        {/* Minimal monochrome brand mark */}
+        {/* Setthi AI Rive brand mark */}
         <div className="flex items-center gap-3">
           <Link
             href="/"
             className="flex items-center gap-2 group text-[#EDEDED] hover:text-white transition-colors"
           >
-            <div className="w-5 h-5 rounded-md bg-white/[0.06] border border-white/[0.12] flex items-center justify-center p-0.5">
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-white"
-              >
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-              </svg>
+            <div className="w-6 h-6 rounded-md bg-[#18191E] border border-white/[0.12] flex items-center justify-center overflow-hidden shrink-0">
+              <AiCompanionRive size={22} />
             </div>
             <span className="font-semibold text-[13px] tracking-[-0.03em] text-[#EDEDED]">
               Setthi

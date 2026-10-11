@@ -113,11 +113,18 @@ export default function PinnedScrollTimeline({
         {/* TOP DOCKED LEDGER BAR (Appears when Salary Card docks at > 22% scroll) */}
         {/* ========================================================= */}
         <div
-          className="w-full max-w-2xl mx-auto mb-4 transition-all duration-300"
+          className="w-full max-w-2xl mx-auto mb-3 transition-all duration-300"
           style={{
-            opacity: salaryDockProgress,
-            transform: `translateY(${(1 - salaryDockProgress) * -20}px)`,
-            pointerEvents: salaryDockProgress > 0.5 ? "auto" : "none",
+            opacity:
+              scrollProgress >= 0.78
+                ? Math.max(0, 1 - (scrollProgress - 0.78) / 0.05)
+                : salaryDockProgress,
+            transform: `translateY(${
+              scrollProgress >= 0.78
+                ? ((scrollProgress - 0.78) / 0.05) * -15
+                : (1 - salaryDockProgress) * -20
+            }px)`,
+            pointerEvents: salaryDockProgress > 0.5 && scrollProgress < 0.78 ? "auto" : "none",
           }}
         >
           <div className="h-11 rounded-lg bg-[#121316] border border-white/[0.08] px-4 flex items-center justify-between shadow-lg">

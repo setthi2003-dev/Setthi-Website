@@ -36,15 +36,11 @@ export default function AiCompanionRive({
 
   const { RiveComponent } = useRive({
     src: "/ai_companion.riv",
-    stateMachines: "State Machine 1",
+    stateMachine: "State Machine 1",
     autoplay: true,
     layout: new Layout({
-      fit: Fit.Contain,
-      alignment: Alignment.Center,
-      minX: 170,
-      minY: 400,
-      maxX: 430,
-      maxY: 660,
+      fit: Fit.Cover,
+      alignment: Alignment.BottomCenter,
     }),
   });
 
@@ -59,16 +55,19 @@ export default function AiCompanionRive({
 
   return (
     <div
-      className={`relative shrink-0 rounded-full overflow-hidden flex items-center justify-center ${className}`}
+      className={`relative shrink-0 rounded-full overflow-hidden flex items-center justify-center select-none ${className}`}
       style={{
         width: size,
         height: size,
+        mixBlendMode: "screen",
       }}
     >
-      <RiveComponent
-        className="w-full h-full object-contain pointer-events-none"
-        style={{ width: size, height: size }}
-      />
+      <div className="w-full h-full absolute inset-0 pointer-events-none">
+        <RiveComponent
+          className="w-full h-full pointer-events-none"
+          style={{ width: "100%", height: "100%" }}
+        />
+      </div>
     </div>
   );
 }

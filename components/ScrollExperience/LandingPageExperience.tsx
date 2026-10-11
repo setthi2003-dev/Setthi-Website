@@ -38,7 +38,7 @@ export default function LandingPageExperience() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#08090C] text-[#EDEDED] selection:bg-white/20 selection:text-white font-sans antialiased overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#08090C] text-[#EDEDED] selection:bg-white/20 selection:text-white font-sans antialiased overflow-x-clip">
       {/* 40px Persistent Floating Island Header */}
       <LinearHeader
         currentDay={currentDay}

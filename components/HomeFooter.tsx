@@ -74,6 +74,11 @@ export default function HomeFooter() {
                   Compliance compendium
                 </Link>
               </li>
+              <li>
+                <Link href="/delete-account" className="text-zinc-400 hover:text-rose-400 transition-colors">
+                  Delete account & data
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -83,12 +88,24 @@ export default function HomeFooter() {
             <p className="text-xs text-zinc-400 text-pretty">
               For grievances, data deletion requests, or general inquiries:
             </p>
-            <a
-              href="mailto:setthi2003@gmail.com"
-              className="inline-block text-xs font-semibold text-emerald-400 hover:text-emerald-300 underline underline-offset-4"
-            >
-              setthi2003@gmail.com
-            </a>
+            <div className="space-y-1">
+              <div>
+                <Link
+                  href="/delete-account"
+                  className="inline-block text-xs font-medium text-rose-400 hover:text-rose-300 underline underline-offset-4"
+                >
+                  Request account deletion →
+                </Link>
+              </div>
+              <div>
+                <a
+                  href="mailto:setthi2003@gmail.com"
+                  className="inline-block text-xs font-semibold text-emerald-400 hover:text-emerald-300 underline underline-offset-4"
+                >
+                  setthi2003@gmail.com
+                </a>
+              </div>
+            </div>
             <p className="text-xs text-zinc-500 leading-relaxed text-pretty">
               Founder & Grievance Officer: Santosh Patil<br />
               Bangalore, Karnataka, Republic of India

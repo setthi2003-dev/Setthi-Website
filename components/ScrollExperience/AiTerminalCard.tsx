@@ -85,7 +85,7 @@ export default function AiTerminalCard({
   const [currentParaIndex, setCurrentParaIndex] = useState(0);
   const [currentParaText, setCurrentParaText] = useState("");
   const [phase, setPhase] = useState<"typing_q" | "calling_tool" | "streaming_r" | "idle">("typing_q");
-  
+
   const isUserInteractingRef = useRef(false);
   const currentScenario = CHAT_SCENARIOS[scenarioIndex];
 
@@ -167,40 +167,53 @@ export default function AiTerminalCard({
 
   return (
     <div
-      className={`w-full max-w-3xl lg:max-w-4xl mx-auto rounded-xl bg-[#0F1014] border border-white/[0.08] p-5 sm:p-7 shadow-2xl relative overflow-hidden text-left ${className}`}
+      className={`w-full max-w-3xl lg:max-w-4xl mx-auto rounded-3xl bg-[#181818] border border-white/[0.08] p-6 sm:p-8 md:p-9 shadow-[0_12px_44px_rgba(0,0,0,0.5)] relative overflow-hidden text-left transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] ${className}`}
     >
-      {/* Hairline top subtle glow accent */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-emerald-500/35 to-transparent" />
-
       {/* Terminal Header Bar */}
-      <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/[0.06]">
-        <div className="flex items-start gap-3">
-          <AiCompanionRive size={32} className="-mt-1" />
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-sm text-white tracking-tight">Setthi AI</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-            </div>
-            <span className="font-mono text-[10px] text-[#8A8F98]">gemini ~ 7 tools grounded</span>
+      <div className="flex items-center justify-between pb-3.5 mb-3.5 border-b border-white/[0.06]">
+        <div className="flex items-center gap-2.5">
+          <AiCompanionRive size={32} />
+          <div className="flex items-center gap-2">
+            <span className="font-semibold text-sm sm:text-base text-white tracking-tight">Setthi AI</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <span className="text-xs font-mono text-emerald-400 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 hidden xs:inline">
+              Companion grounded
+            </span>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400" />
-          <span className="font-mono text-[10px] text-emerald-400 tracking-wider">
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="font-mono text-xs text-emerald-400 tracking-wider">
             {currentScenario.levelBadge}
           </span>
         </div>
       </div>
 
+      {/* Grounded Pipeline Data Feed Status */}
+      <div className="mb-4 px-3.5 py-2 rounded-xl bg-[#1F1F1F] border border-white/[0.06] flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+        <div className="flex items-center gap-2 text-[#8A8F98]">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="text-zinc-300 font-medium">Pipeline feed active:</span>
+          <span>28 bank facts streamed to AI</span>
+        </div>
+        <div className="flex items-center gap-2 text-emerald-400 font-semibold">
+          <span>7 tools connected</span>
+          <span className="text-white/20">•</span>
+          <span>Zero hallucinations</span>
+        </div>
+      </div>
+
       {/* Simulated Conversation Box */}
-      <div className="space-y-4 mb-5 min-h-[175px] flex flex-col justify-center">
+      <div className="space-y-4 mb-6 min-h-[175px] flex flex-col justify-center">
         {/* User Question */}
         <div className="flex items-start gap-3">
-          <span className="font-mono text-[11px] text-[#8A8F98] uppercase tracking-wider pt-0.5 shrink-0 w-16">
-            You:
-          </span>
-          <div className="font-sans text-[15px] sm:text-[16px] text-[#EDEDED] font-medium leading-relaxed">
+          <div className="w-16 shrink-0 min-h-[26px] flex items-center">
+            <span className="font-mono text-xs text-[#8A8F98] uppercase tracking-wider font-medium">
+              You:
+            </span>
+          </div>
+          <div className="font-sans text-base text-[#EDEDED] font-medium leading-relaxed flex-1 text-pretty">
             &ldquo;{typedQuestion}&rdquo;
             {phase === "typing_q" && (
               <span className="inline-block w-1.5 h-4 ml-1 bg-white align-middle animate-pulse" />
@@ -209,19 +222,19 @@ export default function AiTerminalCard({
         </div>
 
         {/* AI Reply with Tool Invocation Indicator */}
-        <div className="flex items-start gap-3 pt-3 border-t border-white/[0.04]">
-          <div className="flex items-center gap-1.5 shrink-0 w-16 pt-0.5">
-            <AiCompanionRive size={18} className="-mt-0.5" />
-            <span className="font-mono text-[11px] text-emerald-400 uppercase tracking-wider font-semibold">
+        <div className="flex items-start gap-3 pt-3.5 border-t border-white/[0.04]">
+          <div className="w-16 shrink-0 min-h-[24px] flex items-center gap-1.5">
+            <AiCompanionRive size={18} />
+            <span className="font-mono text-xs text-emerald-400 uppercase tracking-wider font-semibold">
               AI:
             </span>
           </div>
 
           <div className="space-y-2.5 flex-1">
             {phase === "calling_tool" ? (
-              <div className="flex items-center gap-2 font-mono text-xs text-[#8A8F98]">
+              <div className="flex items-center gap-2 font-mono text-xs text-emerald-400 min-h-[24px] bg-emerald-500/[0.08] px-3 py-1.5 rounded-lg border border-emerald-500/25">
                 <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                <span>Invoking {currentScenario.toolCall}...</span>
+                <span>Querying statement data via {currentScenario.toolCall}...</span>
               </div>
             ) : (
               <>
@@ -229,7 +242,7 @@ export default function AiTerminalCard({
                 {typedParagraphs.map((para, i) => (
                   <p
                     key={i}
-                    className="font-sans text-[13.5px] sm:text-[14.5px] text-[#D4D4D8] leading-relaxed"
+                    className="font-sans text-sm text-[#D4D4D8] leading-relaxed text-pretty"
                   >
                     {para}
                   </p>
@@ -237,7 +250,7 @@ export default function AiTerminalCard({
 
                 {/* Currently Streaming Paragraph */}
                 {phase === "streaming_r" && currentParaText && (
-                  <p className="font-sans text-[13.5px] sm:text-[14.5px] text-[#D4D4D8] leading-relaxed">
+                  <p className="font-sans text-sm text-[#D4D4D8] leading-relaxed text-pretty">
                     {currentParaText}
                     <span className="inline-block w-1.5 h-3.5 ml-1 bg-emerald-400 align-middle animate-pulse" />
                   </p>
@@ -249,9 +262,9 @@ export default function AiTerminalCard({
       </div>
 
       {/* Interactive Level / Question Chips */}
-      <div className="space-y-4 pt-3 border-t border-white/[0.06]">
-        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-          <span className="text-[10px] font-mono text-[#8A8F98] mr-1 uppercase">
+      <div className="space-y-4 pt-4 border-t border-white/[0.06]">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs font-mono text-[#8A8F98] mr-1 uppercase">
             Test a question:
           </span>
           {CHAT_SCENARIOS.map((sc, index) => {
@@ -261,10 +274,10 @@ export default function AiTerminalCard({
                 key={sc.id}
                 type="button"
                 onClick={() => selectScenario(index)}
-                className={`text-[11px] font-sans px-3 py-1.5 rounded-md transition-all border ${
+                className={`text-xs font-sans px-3.5 py-1.5 rounded-full transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] border cursor-pointer active:scale-[0.98] ${
                   isSelected
-                    ? "bg-white/[0.12] text-white border-white/30 font-medium"
-                    : "bg-[#14161C] text-[#8A8F98] border-white/[0.08] hover:border-white/20 hover:text-[#EDEDED]"
+                    ? "bg-white/[0.14] text-white border-white/30 font-medium shadow-sm"
+                    : "bg-[#1F1F1F] text-[#8A8F98] border-white/[0.08] hover:border-white/20 hover:text-white"
                 }`}
               >
                 {sc.chipLabel}
@@ -275,7 +288,7 @@ export default function AiTerminalCard({
 
         {/* Footer Row: Grounded Trust Line & Call to Action */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
-          <div className="flex items-center gap-2 text-[11px] font-mono text-[#8A8F98]">
+          <div className="flex items-center gap-2 text-xs font-mono text-[#8A8F98]">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             <span>Exact bank statement numbers • No emojis • 100% Free</span>
           </div>
@@ -283,19 +296,19 @@ export default function AiTerminalCard({
           <div className="flex items-center gap-2.5 w-full sm:w-auto justify-end">
             <a
               href="#details"
-              className="text-[12px] font-medium text-[#8A8F98] hover:text-[#EDEDED] px-3.5 py-2 rounded-full border border-white/[0.08] hover:border-white/25 transition-all text-center"
+              className="text-xs font-medium text-[#8A8F98] hover:text-white px-4 py-2 rounded-full border border-white/[0.08] hover:border-white/25 hover:bg-white/[0.03] transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] text-center"
             >
-              See All Capabilities
+              See all capabilities
             </a>
 
             <button
               type="button"
               onClick={onClaimAccess}
-              className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-white text-black hover:bg-[#F0F0F0] active:scale-[0.98] transition-all text-[12px] font-semibold tracking-tight shadow-[0_0_20px_rgba(255,255,255,0.18)] border border-white shrink-0"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-white text-black hover:bg-zinc-200 active:scale-[0.98] transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] text-xs font-semibold tracking-tight shadow-[0_4px_16px_rgba(255,255,255,0.2)] border border-white shrink-0 cursor-pointer"
             >
-              <span>Get Free Early Access</span>
+              <span>Get free early access</span>
               <span className="font-mono text-xs">→</span>
-              <kbd className="hidden sm:inline-flex items-center justify-center font-mono text-[10px] bg-black/[0.1] text-black px-1.5 py-0.5 rounded border border-black/10">
+              <kbd className="hidden sm:inline-flex items-center justify-center font-mono text-xs bg-black/[0.08] text-black px-1.5 py-0.5 rounded border border-black/10">
                 ↵
               </kbd>
             </button>

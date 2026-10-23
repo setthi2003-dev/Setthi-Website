@@ -11,19 +11,19 @@ interface NotificationToastProps {
 export const getCategoryColor = (category: ExpenseCategory): string => {
   switch (category) {
     case "essentials":
-      // Neutral grey for essentials
-      return "#717684";
+      // Slate neutral for essentials
+      return "#636674";
     case "discretionary":
-      // Amber for discretionary
-      return "#F59E0B";
+      // Warm taupe/sand neutral for discretionary
+      return "#8E8271";
     case "leaks":
-      // Crimson for leaks
-      return "#EF4444";
+      // Muted dusty stone/warm neutral for leaks (no aggressive reds)
+      return "#8A6E6E";
     case "saved":
-      // Muted teal/cyan for saved
-      return "#10B981";
+      // Restrained forest green accent
+      return "#3B6E59";
     default:
-      return "#717684";
+      return "#636674";
   }
 };
 
@@ -41,11 +41,11 @@ export default function NotificationToast({
   return (
     <div
       style={style}
-      className={`relative flex items-center justify-between w-full h-12 rounded-lg bg-[#121316] border border-white/[0.08] px-3.5 select-none transition-all duration-200 overflow-hidden shadow-sm ${className}`}
+      className={`relative flex items-center justify-between w-full h-12.5 rounded-2xl bg-[#181818] border border-white/[0.08] hover:border-white/[0.16] px-4 select-none transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.25)] ${className}`}
     >
-      {/* 2px vertical color indicator on the leading edge */}
+      {/* 3px vertical color indicator with rounded caps on the leading edge */}
       <span
-        className="absolute left-0 top-0 bottom-0 w-[2px]"
+        className="absolute left-0 top-1.5 bottom-1.5 w-[3px] rounded-r-full"
         style={{ backgroundColor: indicatorColor }}
         aria-hidden="true"
       />
@@ -53,17 +53,17 @@ export default function NotificationToast({
       {/* Left section: Monospace timestamp, arrow glyph, bold single-line merchant */}
       <div className="flex items-center gap-3 min-w-0 pr-3">
         {/* Monospace timestamp on the far left */}
-        <span className="font-mono text-[11px] text-[#8A8F98] tracking-tight shrink-0 tabular-nums">
+        <span className="font-mono text-xs text-[#8A8F98] tracking-tight shrink-0 tabular-nums">
           {transaction.time}
         </span>
 
         {/* Understated neutral arrow glyph */}
-        <span className="text-[#8A8F98]/70 text-[10px] shrink-0 font-mono" aria-hidden="true">
+        <span className="text-[#8A8F98]/70 text-xs shrink-0 font-mono" aria-hidden="true">
           ↘
         </span>
 
         {/* Bold single-line merchant label */}
-        <span className="font-semibold text-[13px] text-[#EDEDED] tracking-[-0.03em] truncate">
+        <span className="font-semibold text-sm text-[#EDEDED] tracking-tight truncate">
           {transaction.merchant}
         </span>
       </div>
@@ -71,11 +71,11 @@ export default function NotificationToast({
       {/* Right section: Crisp white right-aligned amount */}
       <div className="shrink-0 flex items-center gap-2">
         {compact && (
-          <span className="hidden sm:inline font-mono text-[10px] text-[#8A8F98] uppercase">
+          <span className="hidden sm:inline font-mono text-xs text-[#8A8F98] uppercase">
             {transaction.categoryLabel}
           </span>
         )}
-        <span className="font-mono text-[13px] font-medium text-white tracking-tight tabular-nums">
+        <span className="font-mono text-sm font-medium text-white tracking-tight tabular-nums">
           {formattedAmount}
         </span>
       </div>

@@ -15,12 +15,12 @@ const geistMono = Geist_Mono({
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#090a0f",
+  themeColor: "#000000",
 };
 
 export const metadata: Metadata = {
-  title: "Setthi — Legal & Statutory Compliance Hub",
-  description: "Privacy Policy, Terms of Service, DPDP Statutory Consent Notice, and EULA for Setthi.",
+  title: "Setthi — Intelligent Financial Companion",
+  description: "Chat with your money in plain English. Private, grounded, and 100% free.",
   icons: {
     icon: "/Setthi.png",
     shortcut: "/Setthi.png",
@@ -38,7 +38,15 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
     >
-      <body className="min-h-screen bg-[#090a0f] text-[#e2e8f0]">
+      <head>
+        <link
+          rel="preload"
+          href="/ai_companion.riv"
+          as="fetch"
+          crossOrigin="anonymous"
+        />
+      </head>
+      <body suppressHydrationWarning className="min-h-screen bg-[#000000] text-[#EDEDED]">
         {children}
       </body>
     </html>

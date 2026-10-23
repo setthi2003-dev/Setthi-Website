@@ -104,7 +104,7 @@ export default function LegalDocViewer({ sections }: LegalDocViewerProps) {
             <div className="flex items-center gap-2 text-xs flex-shrink-0">
               <a
                 href="mailto:setthi2003@gmail.com"
-                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg border border-emerald-500/30 bg-emerald-950/20 hover:bg-emerald-950/40 text-emerald-300 transition-colors active:scale-95"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-950/20 hover:bg-emerald-950/40 text-emerald-300 transition-all duration-200 active:scale-95 cursor-pointer"
                 title="Contact: setthi2003@gmail.com"
               >
                 <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,7 +119,7 @@ export default function LegalDocViewer({ sections }: LegalDocViewerProps) {
           {/* Swipeable Tab Bar with overflow protection */}
           <div className="w-full min-w-0 max-w-full mt-2 sm:mt-2.5 border-t border-[#181d2a] pt-2">
             <nav
-              className="flex w-full min-w-0 items-center gap-1 sm:gap-1.5 overflow-x-auto pb-1 scrollbar-none touch-pan-x"
+              className="flex w-full min-w-0 items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 scrollbar-none touch-pan-x"
               aria-label="Legal document categories"
             >
               {sections.map((sec) => {
@@ -131,10 +131,10 @@ export default function LegalDocViewer({ sections }: LegalDocViewerProps) {
                       setActiveTab(sec.id);
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className={`whitespace-nowrap px-3 sm:px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-medium transition-all flex-shrink-0 active:scale-95 ${
+                    className={`whitespace-nowrap px-3.5 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-medium transition-all duration-200 flex-shrink-0 active:scale-95 cursor-pointer ${
                       isActive
-                        ? "bg-sky-500/15 border border-sky-400/40 text-sky-300 shadow-sm"
-                        : "text-zinc-400 hover:text-zinc-200 hover:bg-[#141824] border border-transparent"
+                        ? "bg-white/[0.12] border border-white/25 text-white shadow-sm"
+                        : "text-zinc-400 hover:text-white hover:bg-white/[0.05] border border-transparent"
                     }`}
                   >
                     {sec.shortTitle}
@@ -147,13 +147,13 @@ export default function LegalDocViewer({ sections }: LegalDocViewerProps) {
       </header>
 
       {/* Main Content Area */}
-      <main className="mx-auto w-full max-w-4xl min-w-0 px-3 sm:px-6 py-4 sm:py-6">
+      <main className="mx-auto w-full max-w-4xl min-w-0 px-3 sm:px-6 py-6 sm:py-8">
         {/* Active Section Info Card */}
-        <div className="mb-4 sm:mb-6 rounded-xl border border-[#1f2536] bg-[#0e121d] p-3 sm:p-4 shadow-lg w-full min-w-0">
-          <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-sky-400 block">
+        <div className="mb-4 sm:mb-6 rounded-2xl border border-[#1f2536] bg-[#0e121d] p-4 sm:p-5 shadow-lg w-full min-w-0">
+          <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-emerald-400 block">
             Active Document
           </span>
-          <h2 className="text-base sm:text-xl font-bold text-white mt-0.5 leading-snug break-words">
+          <h2 className="text-base sm:text-xl font-bold text-white mt-1 leading-snug break-words">
             {activeSection.title}
           </h2>
           <p className="text-xs sm:text-sm text-zinc-400 mt-1 leading-relaxed break-words">
@@ -164,7 +164,7 @@ export default function LegalDocViewer({ sections }: LegalDocViewerProps) {
         {/* Markdown Rendered Prose */}
         <article
           onClick={handleArticleClick}
-          className="prose-dark w-full max-w-full min-w-0 rounded-xl sm:rounded-2xl border border-[#1a1f2e] bg-[#0b0e17] p-3.5 sm:p-7 md:p-9 shadow-xl overflow-hidden break-words"
+          className="prose-dark w-full max-w-full min-w-0 rounded-2xl sm:rounded-3xl border border-[#1a1f2e] bg-[#0b0e17] p-4 sm:p-8 md:p-10 shadow-xl overflow-hidden break-words"
           dangerouslySetInnerHTML={{ __html: activeSection.html }}
         />
 

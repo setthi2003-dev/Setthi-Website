@@ -4,13 +4,18 @@ import React, { useState, useEffect, useCallback } from "react";
 import LinearHeader from "./LinearHeader";
 import PinnedScrollTimeline from "./PinnedScrollTimeline";
 import ReducedMotionBento from "./ReducedMotionBento";
+import CleoHeroExperience from "./CleoHeroExperience";
+import TaglineReveal from "./TaglineReveal";
+import SolaceFeaturesCarousel from "./SolaceFeaturesCarousel";
 import TechnicalAndPricing from "./TechnicalAndPricing";
 import WaitlistModal from "./WaitlistModal";
 import HomeFooter from "@/components/HomeFooter";
 
-export default function LandingPageExperience() {
-  const [currentDay, setCurrentDay] = useState(1);
-  const [scrollPercent, setScrollPercent] = useState(0);
+interface LandingPageExperienceProps {
+  initialProgress?: number;
+}
+
+export default function LandingPageExperience({ initialProgress }: LandingPageExperienceProps) {
   const [isReducedMotion, setIsReducedMotion] = useState(false);
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
 
@@ -28,36 +33,23 @@ export default function LandingPageExperience() {
     return () => mediaQuery.removeEventListener("change", listener);
   }, []);
 
-  const handleProgressChange = useCallback((progress: number, day: number) => {
-    setScrollPercent(progress);
-    setCurrentDay(day);
-  }, []);
-
-  const toggleMotionMode = () => {
-    setIsReducedMotion((prev) => !prev);
-  };
-
   return (
-    <div className="relative min-h-screen bg-[#08090C] text-[#EDEDED] selection:bg-white/20 selection:text-white font-sans antialiased overflow-x-clip">
-      {/* 40px Persistent Floating Island Header */}
-      <LinearHeader
-        currentDay={currentDay}
-        scrollPercent={scrollPercent}
-        isReducedMotion={isReducedMotion}
-        onToggleMotion={toggleMotionMode}
-        onOpenWaitlist={() => setIsWaitlistOpen(true)}
-      />
-
-      {/* Main Experience: Either Reduced-Motion Bento Grid OR Pinned Scroll Timeline */}
+    <div className="relative min-h-screen bg-[#FAF9F5] text-[#0C0C0E] selection:bg-black/10 selection:text-black font-sans antialiased overflow-x-clip">
+      {/* Main Experience: Cleo Clone Experience with Setthi Storytelling */}
       <main className="w-full">
         {isReducedMotion ? (
           <ReducedMotionBento onClaimAccess={() => setIsWaitlistOpen(true)} />
         ) : (
-          <PinnedScrollTimeline
-            onClaimAccess={() => setIsWaitlistOpen(true)}
-            onProgressChange={handleProgressChange}
+          <CleoHeroExperience
+            onOpenWaitlist={() => setIsWaitlistOpen(true)}
           />
         )}
+
+        {/* Mandatory B11 Tagline Reveal Section */}
+        <TaglineReveal />
+
+        {/* 3D Solace Features Carousel Section (Cleo style with storytelling) */}
+        <SolaceFeaturesCarousel />
 
         {/* Technical Architecture, Pricing & FAQ Section */}
         <TechnicalAndPricing onOpenWaitlist={() => setIsWaitlistOpen(true)} />

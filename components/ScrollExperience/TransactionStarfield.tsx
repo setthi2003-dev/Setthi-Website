@@ -175,8 +175,8 @@ export default function TransactionStarfield({
         // Center sanctuary exclusion: keep center uncluttered, serene, and free from covering the input
         const dx = Math.abs(screenX - cx);
         const dy = Math.abs(screenY - cy);
-        const sanctuaryX = Math.min(160, width * 0.38);
-        const sanctuaryY = Math.min(75, height * 0.12);
+        const sanctuaryX = Math.min(185, width * 0.42);
+        const sanctuaryY = Math.min(80, height * 0.13);
         if (dx < sanctuaryX && dy < sanctuaryY) {
           const normX = dx / sanctuaryX;
           const normY = dy / sanctuaryY;

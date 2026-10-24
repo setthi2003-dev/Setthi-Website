@@ -621,7 +621,7 @@ export default function CleoHeroExperience({
             </h1>
 
             {/* Minimalist Center Early Access Input */}
-            <div className="w-full max-w-[310px] xs:max-w-[340px] sm:max-w-[380px] pointer-events-auto flex flex-col items-center">
+            <div className="w-full max-w-[320px] xs:max-w-[360px] sm:max-w-[420px] pointer-events-auto flex flex-col items-center">
               {heroSubmitted ? (
                 <div className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 h-[44px] sm:h-[48px] rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-medium text-xs sm:text-sm tracking-tight backdrop-blur-xl animate-in fade-in duration-300 shadow-[0_8px_32px_rgba(16,185,129,0.15)]">
                   <span className="font-bold text-sm sm:text-base">✓</span>
@@ -630,7 +630,7 @@ export default function CleoHeroExperience({
               ) : (
                 <form
                   onSubmit={handleHeroSubmit}
-                  className="relative flex items-center justify-between w-full h-[44px] sm:h-[48px] rounded-full bg-white/[0.08] hover:bg-white/[0.12] focus-within:bg-white/[0.15] border border-white/20 focus-within:border-white/40 backdrop-blur-xl transition-all shadow-[0_8px_32px_rgba(0,0,0,0.5)] pl-4 sm:pl-5 pr-1 sm:pr-1.5"
+                  className="relative flex items-center justify-between w-full h-[46px] sm:h-[50px] rounded-full bg-white/[0.08] hover:bg-white/[0.12] focus-within:bg-white/[0.15] border border-white/20 focus-within:border-white/40 backdrop-blur-xl transition-all shadow-[0_8px_32px_rgba(0,0,0,0.5)] pl-4 sm:pl-5 pr-1 sm:pr-1.5"
                 >
                   <input
                     type="email"
@@ -647,21 +647,10 @@ export default function CleoHeroExperience({
                   <button
                     type="submit"
                     disabled={isHeroSubmitting}
-                    aria-label="Get early access"
-                    className="shrink-0 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-black hover:bg-zinc-200 active:scale-95 transition-all flex items-center justify-center cursor-pointer disabled:opacity-50 shadow-sm"
+                    aria-label="Join waitlist"
+                    className="shrink-0 h-[36px] sm:h-[38px] px-3 sm:px-4 rounded-full bg-white text-black hover:bg-zinc-200 active:scale-95 transition-all text-xs sm:text-[13px] font-semibold tracking-tight flex items-center justify-center cursor-pointer disabled:opacity-50 shadow-sm whitespace-nowrap"
                   >
-                    <svg
-                      className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M5 12h14" />
-                      <path d="m12 5 7 7-7 7" />
-                    </svg>
+                    <span>{isHeroSubmitting ? "Joining..." : "Join waitlist"}</span>
                   </button>
                 </form>
               )}

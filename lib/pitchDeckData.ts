@@ -34,7 +34,7 @@ export interface DeckConfig {
 
 // =====================================================================
 // 1. NINE (9) SLIDES DECK — Mapped to /plan
-// Source: setthi_pitch_deck_problem_updated.key / pptx / pdf
+// Source: Setthi_Problem_Updated_Matched_Slides.key / pptx / pdf
 // =====================================================================
 export const EXACT_9_SLIDES: SlideData[] = [
   {
@@ -99,21 +99,22 @@ export const EXACT_9_SLIDES: SlideData[] = [
   {
     id: 4,
     image: "/decks/slides-plan/slide-4.png",
-    category: "WHAT SETTHI HELPS WITH",
-    title: "Three everyday jobs. One simple assistant.",
-    subtitle: "From day-to-day spending clarity to knowing what is safe to spend.",
+    category: "THE PRODUCT & FEATURES",
+    title: "Clear answers today. Better choices tomorrow.",
+    subtitle: "From day-to-day spending clarity to knowing what fits the budget and lifestyle planning.",
     badge: "04 / 09",
     bullets: [
-      "01 • Understand spending: “How much did I spend on food?”",
+      "01 • Understand spending: “Where did my money go?”",
       "02 • Stay ahead of bills: “What payments are coming up?”",
-      "03 • Know what is safe to spend: “Can I afford this today?”"
+      "03 • Know what fits the budget: “Can I afford this?”",
+      "NEXT & BEYOND: Plan around your budget — Explore financial choices, trips, entertainment and experiences. Setthi explains the options. The final decision is always yours."
     ],
     columns: [
       { title: "01. Understand Spending", desc: "Instant answers for food, shopping, utilities" },
       { title: "02. Stay Ahead of Bills", desc: "Track upcoming subscriptions & recurring dues" },
       { title: "03. Safe-to-Spend", desc: "Confidence check before making discretionary purchases" }
     ],
-    keyTakeaway: "Solves the 3 most frequent daily questions without opening a spreadsheet."
+    keyTakeaway: "Clear answers today. Better choices tomorrow."
   },
   {
     id: 5,
@@ -123,99 +124,101 @@ export const EXACT_9_SLIDES: SlideData[] = [
     subtitle: "Early web version validated strong retention and high daily query depth.",
     badge: "05 / 09",
     bullets: [
-      "112 web users in early pilot",
-      "≈100 daily active users (89% of 112 users)",
-      "~3 questions asked per user every day"
+      "972 total web users in early pilot",
+      "≈496 daily active users (51% DAU)",
+      "~3 questions asked per active user / day"
     ],
     metrics: [
-      { value: "112", label: "Early Web Pilot Users" },
-      { value: "≈100", label: "Daily Active Users (89% DAU)" },
-      { value: "~3", label: "Questions / User / Day" }
+      { value: "972", label: "Total Web Pilot Users" },
+      { value: "≈496", label: "Daily Active Users (51% DAU)" },
+      { value: "~3", label: "Questions / Active User / Day" }
     ],
-    sourceCitation: "Founder-reported metrics · ≈100 is 89% × 112, rounded to a whole person."
+    sourceCitation: "51% of 972 web users are daily active (≈496). Calculated as 972 × 51%, rounded."
   },
   {
     id: 6,
     image: "/decks/slides-plan/slide-6.png",
     category: "WHAT IS NEXT",
-    title: "Validated on web. Built for mobile next.",
-    subtitle: "First, a daily money habit. Then, relevant local offers users choose to see.",
+    title: "Validated on web. Built for everyday use.",
+    subtitle: "From web validation to a faster mobile experience and budget-aware planning.",
     badge: "06 / 09",
     bullets: [
-      "01 • WEB: Prove the need. 112 users showed interest and strong daily usage.",
-      "02 • MOBILE: Make it a habit. A simpler, faster experience for daily money questions.",
-      "Vision: First, daily finance habit. Then, relevant local offers users choose to see."
+      "01 • WEB: Proved the need. 972 people explored Setthi on web.",
+      "02 • MOBILE: Make it a habit. A faster mobile experience, then budget-aware planning."
     ],
     columns: [
-      { title: "01. Web Validation", desc: "Proved customer love and daily retention" },
-      { title: "02. Mobile Native", desc: "Lightning fast everyday transactions companion" }
+      { title: "01. Web Validation", desc: "972 people explored Setthi on web" },
+      { title: "02. Mobile Native", desc: "Faster mobile experience and budget-aware planning" }
     ],
-    keyTakeaway: "Building a sticky everyday habit before introducing high-intent distribution."
+    keyTakeaway: "From web validation to a faster mobile experience and budget-aware planning."
   },
   {
     id: 7,
     image: "/decks/slides-plan/slide-7.png",
-    category: "OUR CLOSEST COMPETITOR",
+    category: "COMPETITION & OUR ADVANTAGE",
     title: "Fold starts with a dashboard. Setthi starts with a question.",
     subtitle: "Contrasting dashboard-heavy tracking against conversational clarity.",
     badge: "07 / 09",
     bullets: [
-      "FOLD (Dashboard-first): Balances, charts, and financial overview. (1L+ Google Play downloads)",
-      "SETTHI (Assistant-first): Ask a question. Get a clear answer about your own money.",
-      "Fold also offers AI chat, but Setthi is built conversation-first from the ground up."
+      "FOLD (Dashboard-first): Track balances, activity and financial health. (1L+ Google Play downloads)",
+      "SETTHI (Assistant-first): Understand spending, explore choices and plan within a budget.",
+      "UNDERSTAND → EXPLORE → PLAN",
+      "OUR EDGE: Personal guidance across decisions — with the user always in control."
     ],
     columns: [
       { title: "Fold: Dashboard-First", desc: "1L+ downloads · Screen full of balances & charts" },
-      { title: "Setthi: Assistant-First", desc: "Starts with what is on your mind · Instant plain answers" }
+      { title: "Setthi: Assistant-First", desc: "Starts with what is on your mind · Instant plain answers" },
+      { title: "Our Edge", desc: "Personal guidance across decisions — user always in control" }
     ],
-    keyTakeaway: "People don't want to decipher a financial cockpit; they want quick answers."
+    sourceCitation: "Fold also offers AI chat. 1L+ refers to Google Play downloads, not verified users. Source: Google Play, Nov 2026.",
+    keyTakeaway: "Fold starts with a dashboard. Setthi starts with a question."
   },
   {
     id: 8,
     image: "/decks/slides-plan/slide-8.png",
-    category: "BUSINESS MODEL",
-    title: "We turn user spending and location data into a private distribution engine for businesses",
-    subtitle: "Privacy-first merchant reach driven by real consumer interest.",
+    category: "BUSINESS MODEL · PLANNED",
+    title: "We turn users’ spending patterns into a private distribution engine for businesses.",
+    subtitle: "A privacy-first flywheel aligning consumer savings with high-intent commerce.",
     badge: "08 / 09",
-    highlight: "PRIVACY FIRST: Merchants never receive individual transactions or location data.",
+    highlight: "PRIVACY FIRST: Businesses never see individual transactions or identities.",
     bullets: [
-      "WHAT WE LEARN: With permission: spending categories, buying habits and approximate location.",
-      "HOW IT WORKS: Nearby offers go to users who already spend in similar categories.",
-      "REVENUE & REACH: Merchants pay to promote offers. More users, more reach.",
-      "EXAMPLE · BENGALURU: A Koramangala restaurant offers 20% off weekday lunch to nearby dining users. The restaurant pays Setthi."
+      "WHAT WE LEARN: With permission: the categories people spend in and their purchasing habits.",
+      "HOW IT WORKS: Setthi helps businesses reach people already interested in what they sell.",
+      "HOW WE EARN: Businesses pay Setthi to reach interested buyers.",
+      "ONE ENGINE. MANY CATEGORIES: Shopping (product launches), Entertainment (tickets & experiences), Travel (stays & bookings)."
     ],
     metrics: [
-      { value: "Categories", label: "Opt-in spending habits" },
-      { value: "Local Reach", label: "Contextual offers nearby" },
-      { value: "Zero Data Sale", label: "Private distribution engine" }
+      { value: "Shopping", label: "Product launches" },
+      { value: "Entertainment", label: "Tickets & experiences" },
+      { value: "Travel", label: "Stays & bookings" }
     ],
-    keyTakeaway: "Local businesses reach ready buyers without anyone selling user data."
+    keyTakeaway: "Businesses pay Setthi for relevant reach without compromising user privacy."
   },
   {
     id: 9,
     image: "/decks/slides-plan/slide-9.png",
-    category: "VISION",
-    title: "Data is the new gold. Distribution is the power.",
-    subtitle: "Not just revenue from offers. Setthi can become the trusted way local businesses reach people ready to buy — without selling their personal data.",
+    category: "VISION & SUMMARY",
+    title: "Spending patterns are the advantage. Distribution is the power.",
+    subtitle: "Setthi begins by helping people understand money. Next, it helps them weigh choices and plan within their budget. For businesses, that becomes a privacy-first way to reach interested buyers across categories.",
     badge: "09 / 09",
     highlight: "setthi.in   ·   WEB VALIDATED   ·   MOBILE NEXT",
     bullets: [
-      "Understand money through honest, private AI conversation.",
-      "Connect buyers to merchants through high-intent, permissioned distribution.",
-      "Preserve 100% user data privacy at all times."
+      "Understand: Transform cryptic statements into plain English conversational answers.",
+      "Plan: Weigh financial choices, trips, entertainment, and lifestyle within actual budgets.",
+      "Distribution: A privacy-preserving bridge connecting consumers with relevant businesses."
     ],
     metrics: [
       { value: "setthi.in", label: "Web Companion" },
       { value: "Mobile Next", label: "iOS & Android" },
-      { value: "Distribution", label: "The Power" }
+      { value: "Privacy-First", label: "Zero Compromise on User Data" }
     ],
-    keyTakeaway: "Data is the new gold. Distribution is the power."
+    keyTakeaway: "Spending patterns are the advantage. Distribution is the power."
   }
 ];
 
 // =====================================================================
 // 2. ELEVEN (11) SLIDES DECK — Mapped to /full-plan
-// Source: Setthi_Pitch_Deck_11_Slides_Business_Simplified.pdf / pptx
+// Source: Setthi_Pitch_Deck_11_Slides_Business_Simplified.pdf / pptx / key
 // =====================================================================
 export const EXACT_11_SLIDES: SlideData[] = [
   {
@@ -455,9 +458,9 @@ export const PLAN_DECK_CONFIG: DeckConfig = {
   subtitle: "Your money. Finally, answers. The personal finance assistant that speaks plain English.",
   badge: "9 Slides • Problem & Solution",
   slideCount: 9,
-  pdfUrl: "/decks/setthi_pitch_deck_problem_updated.pdf",
-  keynoteUrl: "/decks/setthi_pitch_deck_problem_updated.key",
-  pptxUrl: "/decks/setthi_pitch_deck_problem_updated.pptx",
+  pdfUrl: "/decks/Setthi_Problem_Updated_Matched_Slides.pdf",
+  keynoteUrl: "/decks/Setthi_Problem_Updated_Matched_Slides.key",
+  pptxUrl: "/decks/Setthi_Problem_Updated_Matched_Slides.pptx",
   alternateUrl: "/full-plan",
   alternateLabel: "11-Slide Full Plan →",
   slides: EXACT_9_SLIDES

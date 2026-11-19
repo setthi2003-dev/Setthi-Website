@@ -42,6 +42,16 @@ export default function HomeFooter() {
                   Recurring bill detection
                 </a>
               </li>
+              <li>
+                <Link href="/plan" className="hover:text-emerald-400 transition-colors">
+                  Pitch deck (Overview)
+                </Link>
+              </li>
+              <li>
+                <Link href="/full-plan" className="hover:text-emerald-400 transition-colors">
+                  Full business plan (Deck)
+                </Link>
+              </li>
             </ul>
           </div>
 

@@ -52,6 +52,11 @@ export default function HomeFooter() {
                   Full business plan (Deck)
                 </Link>
               </li>
+              <li>
+                <Link href="/vision" className="hover:text-emerald-400 transition-colors">
+                  Our vision & philosophy
+                </Link>
+              </li>
             </ul>
           </div>
 
